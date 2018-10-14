@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/classNameLayout"
+                style="@style/style_score_Linear">
+                <TextView
+                    style="@style/style_score_itemName"
+                    android:text="课程名称:" />
+                <TextView
+                    android:id="@+id/className"
+                    style="@style/style_score_itemValue" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/classNatureLayout"
+                style="@style/style_score_Linear">
+                <TextView
+                    style="@style/style_score_itemName"
+                    android:text="课程性质:" />
+                <TextView
+                    android:id="@+id/classNature"
+                    style="@style/style_score_itemValue" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/creditLayout"
+                style="@style/style_score_Linear">
+                <TextView
+                    android:text="学分:"
+                    style="@style/style_score_itemName" />
+                <TextView
+                    android:id="@+id/credit"
+                    style="@style/style_score_itemValue" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/midTermGradeLayout"
+                style="@style/style_score_Linear">
+                <TextView
+                    android:text="期中成绩:"
+                    style="@style/style_score_itemName" />
+                <TextView
+                    android:id="@+id/midTermGrade"
+                    style="@style/style_score_itemValue" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/finalGradeLayout"
+                style="@style/style_score_Linear">
+                <TextView
+                    android:text="考试成绩:"
+                    style="@style/style_score_itemName" />
+                <TextView
+                    android:id="@+id/finalGrade"
+                    style="@style/style_score_itemValue" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/experimentalGradeLayout"
+                style="@style/style_score_Linear">
+                <TextView
+                    android:text="实验成绩:"
+                    style="@style/style_score_itemName"/>
+                <TextView
+                    android:id="@+id/experimentalGrade"
+                    style="@style/style_score_itemValue" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/gradeLayout"
+                style="@style/style_score_Linear">
+                <TextView
+                    android:text="成绩:"
+                    style="@style/style_score_itemName" />
+                <TextView
+                    android:id="@+id/grade"
+                    style="@style/style_score_itemValue" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/makeupGradeLayout"
+                style="@style/style_score_Linear">
+                <TextView
+                    android:text="补考成绩:"
+                    style="@style/style_score_itemName"/>
+                <TextView
+                    android:id="@+id/makeupGrade"
+                    style="@style/style_score_itemValue" />
+            </LinearLayout>
+
+        </LinearLayout>
+</android.support.v7.widget.CardView>

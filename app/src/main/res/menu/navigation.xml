@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_search"
+        android:icon="@drawable/search1"
+        android:title="@string/title_search" />
+
+    <item
+        android:id="@+id/navigation_lostGoods"
+        android:icon="@drawable/news"
+        android:title="@string/title_LAF" />
+
+    <item
+        android:id="@+id/navigation_website"
+        android:icon="@drawable/browser"
+        android:title="@string/title_website" />
+
+</menu>

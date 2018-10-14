@@ -1,0 +1,43 @@
+<resources>
+    <string name="app_name">南工程助手</string>
+
+    <string name="title_search">成绩查询</string>
+    <string name="title_LAF">失物招领</string>
+    <string name="title_website">常用网站</string>
+    <string name="data_select">学年选择</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="studentNumber">教务账号</string>
+    <string name="studentPassword">教务密码</string>
+
+    <string-array name="website_url">
+        <item>"正方登录"</item>
+        <item>"教务网"</item>
+        <item>"外国语学院"</item>
+        <item>"图书查找"</item>
+        <item>"财务处"</item>
+        <item>素质拓选学分</item>
+    </string-array>
+
+    <string-array name="years_select">
+        <item>2015-2016</item>
+        <item>2016-2017</item>
+        <item>2017-2018</item>
+        <item>2018-2019</item>
+    </string-array>
+
+    <string-array name="semester_select">
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+
+
+    <!--LAFInformation-->
+    <string name="contactWay">联系电话</string>
+    <string name="lostPlace">遗失地点(eg:教学楼东A101)</string>
+    <string name="lostGoods">遗失物品(eg:校园卡)</string>
+    <string name="laf_menu_alter">修改</string>
+    <string name="laf_menu_delete">删除</string>
+    <string name="verifyCode">验证码</string>
+</resources>
