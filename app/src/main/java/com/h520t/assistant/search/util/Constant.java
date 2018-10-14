@@ -1,5 +1,9 @@
 package com.h520t.assistant.search.util;
 
+import android.graphics.Bitmap;
+
+import com.h520t.assistant.search.bean.ScoreBean;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +21,7 @@ public class Constant {
     public static List<Cookie> sCookieList;
     public static String sCookie;
     public static ArrayList<ScoreBean> sScoreBeans = new ArrayList<>();
+    public static Bitmap verifyBitmap;
     public static final String CHECK_CODE_URL = "http://jwjx.njit.edu.cn/CheckCode.aspx";
     public static final String POST_LOGIN_URL = "http://jwjx.njit.edu.cn/default2.aspx";
     public static final String LOGIN_VIEWSTATE = "dDwxNTMxMDk5Mzc0Ozs+nttZfhG6oXx92HiCAr5KIDfqE08=";

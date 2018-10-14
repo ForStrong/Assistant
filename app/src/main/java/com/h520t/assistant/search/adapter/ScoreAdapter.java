@@ -1,4 +1,4 @@
-package com.h520t.assistant.search.util;
+package com.h520t.assistant.search.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.h520t.assistant.R;
+import com.h520t.assistant.search.bean.ScoreBean;
 
 import java.util.ArrayList;
 

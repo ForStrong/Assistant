@@ -1,4 +1,4 @@
-package com.h520t.assistant.search.util;
+package com.h520t.assistant.search.bean;
 
 import java.io.Serializable;
 

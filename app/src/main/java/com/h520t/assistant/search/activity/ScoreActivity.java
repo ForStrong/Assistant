@@ -1,4 +1,4 @@
-package com.h520t.assistant.search;
+package com.h520t.assistant.search.activity;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -9,12 +9,13 @@ import android.support.v7.widget.Toolbar;
 
 import com.h520t.assistant.R;
 import com.h520t.assistant.search.util.Constant;
-import com.h520t.assistant.search.util.ScoreAdapter;
+import com.h520t.assistant.search.adapter.ScoreAdapter;
 
 import java.util.ArrayList;
 
 public class ScoreActivity extends AppCompatActivity {
     public static final String TOOLBAR_TITLE = "toolbarTitle";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

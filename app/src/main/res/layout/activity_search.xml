@@ -5,12 +5,13 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    tools:context=".search.SearchActivity">
+    tools:context=".search.activity.SearchActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/search_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
+        app:title="成绩查询"
         app:navigationIcon="@drawable/back"
         app:titleTextColor="@android:color/white"
         android:background="@color/colorPrimary"/>
@@ -138,6 +139,7 @@
         android:layout_marginTop="40dp"
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
+        android:text="查看成绩"
         android:background="@drawable/search_bt_bg"
         android:textColor="@android:color/white"/>
 

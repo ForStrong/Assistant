@@ -19,7 +19,7 @@
             android:name=".MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppBaseTheme"></activity>
-        <activity android:name=".search.SearchActivity" />
+        <activity android:name=".search.activity.SearchActivity" />
         <activity android:name=".laf.TheLostInformationActivity" />
 
         <provider
@@ -39,7 +39,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".search.ScoreActivity"></activity>
+        <activity android:name=".search.activity.ScoreActivity"></activity>
     </application>
 
 </manifest>
