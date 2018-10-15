@@ -1,9 +1,11 @@
 package com.h520t.assistant.search.util;
 
+
 import android.support.annotation.NonNull;
 
+import com.h520t.assistant.search.bean.GPABean;
 import com.h520t.assistant.search.bean.ScoreBean;
-import com.h520t.assistant.search.call_back_impl.IScoreCallback;
+import com.h520t.assistant.search.call_back_impl.IGPACallBack;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -21,20 +23,21 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-public class SearchScoreUtils {
+public class GPAUtils {
     private String mStudentID;
-    private IScoreCallback mScoreCallBack;
-    private String mYear,mSemester;
+    private IGPACallBack mGPACallBack;
+    private String mYear,mSemester,mSearchID;
 
-    public SearchScoreUtils(String studentID, IScoreCallback scoreCallBack, String year, String semester) {
-        mStudentID = studentID;
-        mScoreCallBack = scoreCallBack;
+    public GPAUtils(String studentID, IGPACallBack GPACallBack,String searchID, String year, String semester) {
         mYear = year;
         mSemester = semester;
+        mSearchID = searchID;
+        mStudentID = studentID;
+        mGPACallBack = GPACallBack;
     }
 
-    public void loginScore(String xm){
-        final String loginScoreUrl = Constant.SCORE_SEARCH_URL+mStudentID+"&xm=" + xm + Constant.SCORE_SEARCH_GNMKDM;
+    public void loginGPA(String xm){
+        final String loginScoreUrl = Constant.GPA_SEARCH_URL+mStudentID+"&xm=" + xm + Constant.GPA_GNMKDM;
         Callback callback = new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
@@ -45,19 +48,18 @@ public class SearchScoreUtils {
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 String html = Objects.requireNonNull(response.body()).string();
                 String viewstate = Jsoup.parse(html).select("input[name=__VIEWSTATE]").val();
-                scoreSearch(xm, loginScoreUrl, viewstate);
+                GPASearch(xm, loginScoreUrl, viewstate);
             }
         };
 
         Map<String,String> headers = new HashMap<>();
         headers.put("Cookie", Constant.sCookie);
-        headers.put("Referer", Constant.GET_LOGIN_URL+mStudentID);
+        headers.put("Referer", Constant.GPA_SEARCH_URL+mStudentID);
         headers.put("Host", Constant.HOST);
         HttpUtils.doGet(loginScoreUrl,callback,headers);
     }
 
-    //-------------------------------------------post成绩查询--------------------------------------------------------------------//
-    private void scoreSearch(String xm, String loginScoreUrl, String viewState) {
+    private void GPASearch(String xm, String loginScoreUrl, String viewState) {
         Callback callback = new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) { }
@@ -74,15 +76,15 @@ public class SearchScoreUtils {
                         arrayList.add(td.text());
                     }
                 }
-                for (int i = 16; i < arrayList.size(); i=i+16) {
-                    List<String> strings = arrayList.subList(i, i+16);
-                    Constant.sScoreBeans.add(new ScoreBean(strings.get(3),strings.get(4),strings.get(6),strings.get(7)
-                            ,strings.get(8),strings.get(9),strings.get(10),strings.get(11)));
+                for (int i = 15; i < arrayList.size(); i=i+15) {
+                    List<String> strings = arrayList.subList(i, i+15);
+                    Constant.sGPABeans.add(new GPABean(strings.get(3),strings.get(4),strings.get(6),strings.get(7)
+                            ,strings.get(8),strings.get(10),strings.get(11)));
                 }
-                if (!(Constant.sScoreBeans.size()>0)){
-                    mScoreCallBack.failedSemester();
+                if (!(Constant.sGPABeans.size()>0)){
+                    mGPACallBack.failedSemester();
                 }else{
-                    mScoreCallBack.successGetGrade();
+                    mGPACallBack.successOfSemester();
                 }
             }
         };
@@ -94,15 +96,18 @@ public class SearchScoreUtils {
         Map<String,String> params = new HashMap<>();
         params.put("xh", mStudentID);
         params.put("xm", xm);
-        params.put("gnmkdm", "N121605");
+        params.put("gnmkdm", "N121617");
         params.put("ASP.NET_SessionId", Constant.sCookie);
         params.put("__EVENTTARGET", "");
         params.put("__EVENTARGUMENT", "");
         params.put("__VIEWSTATE", viewState);
-        params.put("ddlxn", mYear);
-        params.put("ddlxq", mSemester);
-        params.put("btnCx", "查询");
+        params.put("hidLanguage", "");
+        params.put("ddlXN", mYear);
+        params.put("ddlXQ", mSemester);
+        params.put("ddl_kcxz","");
+        params.put("btn_xq", "学期成绩");
         HttpUtils.doPost(loginScoreUrl,callback,headers,params);
     }
+
 
 }

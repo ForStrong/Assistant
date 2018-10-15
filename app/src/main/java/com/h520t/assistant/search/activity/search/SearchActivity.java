@@ -1,6 +1,7 @@
-package com.h520t.assistant.search.activity;
+package com.h520t.assistant.search.activity.search;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -14,6 +15,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.h520t.assistant.R;
+import com.h520t.assistant.search.activity.information.ScoreActivity;
 import com.h520t.assistant.search.call_back_impl.ILoginCallBack;
 import com.h520t.assistant.search.call_back_impl.IScoreCallback;
 import com.h520t.assistant.search.util.Constant;
@@ -32,12 +34,12 @@ public class SearchActivity extends AppCompatActivity {
     private Button mVerifyCodeBt;
     private Button mBtn_login;
     private Toolbar mToolbar;
-
     private LoginUtils mLoginUtils;
     private IScoreCallback mScoreCallBack =  new IScoreCallback() {
         @Override
         public void failedSemester() {
             runOnUiThread(() -> {
+                mBtn_login.setText("查询成绩");
                 Toast.makeText(SearchActivity.this, "还无法查询该学期的成绩", Toast.LENGTH_SHORT).show();
                 mLoginUtils.getCookie();
                 mVerifyEt.setText("");
@@ -48,7 +50,7 @@ public class SearchActivity extends AppCompatActivity {
         public void successGetGrade() {
             runOnUiThread(() -> {
                 Intent intent = new Intent(SearchActivity.this, ScoreActivity.class);
-                intent.putExtra(ScoreActivity.TOOLBAR_TITLE, year + "学年 " + semester + "学期成绩");
+                intent.putExtra(ScoreActivity.TOOLBAR_TITLE, year + " " + semester + " 成绩");
                 startActivity(intent);
             });
             Log.i(TAG, "successGetGrade: " + Constant.sScoreBeans);
@@ -57,15 +59,18 @@ public class SearchActivity extends AppCompatActivity {
 
     private ILoginCallBack mLoginCallBack = new ILoginCallBack() {
         @Override
-        public void setVerifyImg() {
+        public void setVerifyImg(Bitmap bitmap) {
             runOnUiThread(() -> {
-                verifyImage.setImageBitmap(Constant.verifyBitmap);
-                Constant.verifyBitmap = null;
+                mBtn_login.setText("查询成绩");
+                if (bitmap!=null) {
+                    verifyImage.setImageBitmap(bitmap);
+                }
             });
         }
         @Override
         public void failedStudentID() {
             runOnUiThread(() -> {
+                mBtn_login.setText("查询成绩");
                 Toast.makeText(SearchActivity.this, "用户名不存在或未按照要求参加教学活动", Toast.LENGTH_SHORT).show();
                 mLoginUtils.getCookie();
                 mStudentIDEt.setText("");
@@ -75,6 +80,7 @@ public class SearchActivity extends AppCompatActivity {
         @Override
         public void failedPassword() {
             runOnUiThread(() -> {
+                mBtn_login.setText("查询成绩");
                 Toast.makeText(SearchActivity.this, "密码错误", Toast.LENGTH_SHORT).show();
                 mLoginUtils.getCookie();
                 mPasswordEt.setText("");
@@ -84,6 +90,7 @@ public class SearchActivity extends AppCompatActivity {
         @Override
         public void failedVerifyCode() {
             runOnUiThread(() -> {
+                mBtn_login.setText("查询成绩");
                 Toast.makeText(SearchActivity.this, "验证码错误", Toast.LENGTH_SHORT).show();
                 mLoginUtils.getCookie();
                 mVerifyEt.setText("");
@@ -92,9 +99,16 @@ public class SearchActivity extends AppCompatActivity {
         @Override
         public void failedMessage() {
             runOnUiThread(() -> {
+                mBtn_login.setText("查询成绩");
                 Toast.makeText(SearchActivity.this, "填写完整信息", Toast.LENGTH_SHORT).show();
                 mLoginUtils.getCookie();
             });
+        }
+
+        @Override
+        public void successLogin(String xm) {
+            SearchScoreUtils searchScoreUtils = new SearchScoreUtils(studentID,mScoreCallBack,year,semester);
+            searchScoreUtils.loginScore(xm);
         }
     };
 
@@ -148,12 +162,11 @@ public class SearchActivity extends AppCompatActivity {
 
         //获取成绩
         mBtn_login.setOnClickListener(view -> {
+            Button loginBt = view.findViewById(R.id.login_bt);
+            loginBt.setText("查询中...");
             studentID = mStudentIDEt.getText().toString();
             password = mPasswordEt.getText().toString();
             verifyCode = mVerifyEt.getText().toString();
-            SearchScoreUtils searchScoreUtils = new SearchScoreUtils(year,semester);
-            searchScoreUtils.setUIImpl(mScoreCallBack);
-            mLoginUtils.setScoreUtil(searchScoreUtils);
             mLoginUtils.setStudentID(studentID);
             mLoginUtils.setPassword(password);
             mLoginUtils.setVerifyCode(verifyCode);
@@ -166,5 +179,6 @@ public class SearchActivity extends AppCompatActivity {
         super.onStop();
         mLoginUtils.getCookie();
         mVerifyEt.setText("");
+        mBtn_login.setText("查询成绩");
     }
 }

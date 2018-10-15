@@ -8,10 +8,10 @@
     tools:context=".search.activity.search.SearchActivity">
 
     <android.support.v7.widget.Toolbar
-        android:id="@+id/search_toolbar"
+        android:id="@+id/gpa_search_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        app:title="成绩查询"
+        app:title="绩点查询"
         app:navigationIcon="@drawable/back"
         app:titleTextColor="@android:color/white"
         android:background="@color/colorPrimary"/>
@@ -32,7 +32,7 @@
             />
 
         <Spinner
-            android:id="@+id/years_select"
+            android:id="@+id/gpa_years_select"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="2"
@@ -42,12 +42,12 @@
             android:spinnerMode="dialog" />
 
         <Spinner
-            android:id="@+id/semester_select"
+            android:id="@+id/gpa_semester_select"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:dropDownWidth="56dp"
-            android:prompt="@string/data_select"
+            android:prompt="@string/semester_select"
             android:spinnerMode="dialog"
             android:entries="@array/semester_select"
             />
@@ -61,7 +61,7 @@
         android:paddingEnd="5dp"
         android:layout_height="56dp">
         <android.support.design.widget.TextInputEditText
-            android:id="@+id/studentID"
+            android:id="@+id/gpa_studentID"
             android:text="202160211"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -79,7 +79,7 @@
         >
 
         <android.support.design.widget.TextInputEditText
-            android:id="@+id/password"
+            android:id="@+id/gpa_password"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="hhht03279335"
@@ -102,7 +102,7 @@
             android:layout_weight="1"
             android:background="@drawable/shape_score_verify_bg">
             <EditText
-                android:id="@+id/security_code"
+                android:id="@+id/gpa_security_code"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -111,7 +111,7 @@
                 android:hint="@string/verifyCode" />
 
             <ImageView
-                android:id="@+id/verification_icon"
+                android:id="@+id/gpa_verification_icon"
                 android:layout_width="80dp"
                 android:layout_height="30dp"
                 android:layout_marginEnd="5dp"
@@ -121,7 +121,7 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/verification_bt"
+            android:id="@+id/gpa_verification_bt"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginStart="10dp"
@@ -133,13 +133,13 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/login_bt"
+        android:id="@+id/gpa_login_bt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
-        android:text="查看成绩"
+        android:text="查看绩点"
         android:background="@drawable/search_bt_bg"
         android:textColor="@android:color/white"/>
 

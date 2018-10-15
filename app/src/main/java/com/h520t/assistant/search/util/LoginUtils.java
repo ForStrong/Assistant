@@ -15,6 +15,7 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -26,13 +27,8 @@ import okhttp3.Response;
 public class LoginUtils {
     private String mStudentID,mPassword,mVerifyCode;
     private ILoginCallBack mLoginCallBack;
-    private SearchScoreUtils mScoreUtil;
 
     public LoginUtils() { }
-
-    public void setScoreUtil(SearchScoreUtils scoreUtil) {
-        mScoreUtil = scoreUtil;
-    }
 
     public void setStudentID(String studentID) {
         mStudentID = studentID;
@@ -62,8 +58,8 @@ public class LoginUtils {
                 byte[] verificationCode = Objects.requireNonNull(response.body()).bytes();
                 if (verificationCode != null && verificationCode.length > 0) {
                     Bitmap bitmap = BitmapFactory.decodeByteArray(verificationCode, 0, verificationCode.length);
-                    Constant.verifyBitmap = changeBitmapSize(bitmap);
-                    mLoginCallBack.setVerifyImg();
+                    Bitmap resizeBitmap = changeBitmapSize(bitmap);
+                    mLoginCallBack.setVerifyImg(resizeBitmap);
                 }
             }
         };
@@ -92,7 +88,7 @@ public class LoginUtils {
                             String text = select.text();
                             name = text.substring(0, text.length() - 2);
                         }else{
-                            mLoginCallBack.setVerifyImg();
+                            mLoginCallBack.failedVerifyCode();
                         }
                     }
                     loginGet(name);
@@ -113,10 +109,7 @@ public class LoginUtils {
             HttpUtils.doPost(Constant.POST_LOGIN_URL,callback,null,params);
         }else{
             mLoginCallBack.failedMessage();
-
         }
-
-
     }
     private boolean isSuccessLogin(Document parse) {
         Elements scripts = parse.getElementsByTag("script");
@@ -146,12 +139,11 @@ public class LoginUtils {
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) {
-                if (response.isSuccessful()) {
-                    try {
-                        mScoreUtil.loginScore(name, mStudentID);
-                    } catch (UnsupportedEncodingException e) {
-                        e.printStackTrace();
-                    }
+                try {
+                    String xm = URLEncoder.encode(name, "GB2312");
+                    mLoginCallBack.successLogin(xm);
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
                 }
             }
         };

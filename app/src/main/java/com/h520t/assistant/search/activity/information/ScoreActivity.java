@@ -1,4 +1,4 @@
-package com.h520t.assistant.search.activity;
+package com.h520t.assistant.search.activity.information;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -29,7 +29,12 @@ public class ScoreActivity extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.score_rv);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         ScoreAdapter adapter = new ScoreAdapter(Constant.sScoreBeans);
-        Constant.sScoreBeans = new ArrayList<>();
         recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Constant.sScoreBeans = new ArrayList<>();
     }
 }

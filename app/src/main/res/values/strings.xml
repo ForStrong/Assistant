@@ -5,6 +5,7 @@
     <string name="title_LAF">失物招领</string>
     <string name="title_website">常用网站</string>
     <string name="data_select">学年选择</string>
+    <string name="semester_select">学期选择</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

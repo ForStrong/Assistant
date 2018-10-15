@@ -2,6 +2,7 @@ package com.h520t.assistant.search.util;
 
 import android.graphics.Bitmap;
 
+import com.h520t.assistant.search.bean.GPABean;
 import com.h520t.assistant.search.bean.ScoreBean;
 
 import java.util.ArrayList;
@@ -13,7 +14,7 @@ public class Constant {
 
     public static List<Cookie> sCookieList;
     public static String sCookie;
-    public static ArrayList<ScoreBean> sScoreBeans = new ArrayList<>();
+
     public static Bitmap verifyBitmap;
     public static final String CHECK_CODE_URL = "http://jwjx.njit.edu.cn/CheckCode.aspx";
     public static final String POST_LOGIN_URL = "http://jwjx.njit.edu.cn/default2.aspx";
@@ -22,6 +23,16 @@ public class Constant {
     public static final String GET_LOGIN_URL = " http://jwjx.njit.edu.cn/xs_main.aspx?xh=";
 
     //成绩查询参数
+    //实验期中成绩查询
+    public static ArrayList<ScoreBean> sScoreBeans = new ArrayList<>();
     public static final String SCORE_SEARCH_URL = "http://jwjx.njit.edu.cn/xscjcx_dq.aspx?xh=";
     public static final String SCORE_SEARCH_GNMKDM = "&gnmkdm=N121605";
+    //绩点成绩查询
+    public static ArrayList<GPABean> sGPABeans = new ArrayList<>();
+    public static String semester="semester";
+    public static String academicYear="academicYear";
+    public static String calendarYear="calendarYear";
+    public static final String GPA_SEARCH_URL = " http://jwjx.njit.edu.cn/xscjcx.aspx?xh=";
+    public static final String GPA_GNMKDM = "&gnmkdm=N121617";
+
 }

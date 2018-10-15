@@ -12,7 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.h520t.assistant.R;
-import com.h520t.assistant.search.activity.SearchActivity;
+import com.h520t.assistant.search.activity.search.GPAActivity;
+import com.h520t.assistant.search.activity.search.SearchActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -46,6 +47,8 @@ public class SearchFragment extends Fragment {
         });
 
         GPASearch.setOnClickListener(view -> {
+            Intent intent = new Intent(getActivity(), GPAActivity.class);
+            startActivity(intent);
         });
 
     }

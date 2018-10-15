@@ -18,8 +18,8 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppBaseTheme"></activity>
-        <activity android:name=".search.activity.SearchActivity" />
+            android:theme="@style/AppBaseTheme" />
+        <activity android:name=".search.activity.search.SearchActivity" />
         <activity android:name=".laf.TheLostInformationActivity" />
 
         <provider
@@ -39,7 +39,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".search.activity.ScoreActivity"></activity>
+        <activity android:name=".search.activity.information.ScoreActivity" />
+        <activity android:name=".search.activity.search.GPAActivity" />
+        <activity android:name=".search.activity.information.GPAInformationActivity"></activity>
     </application>
 
 </manifest>
