@@ -1,13 +1,12 @@
 package com.h520t.assistant.search.util;
 
-import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
-import com.h520t.assistant.search.call_back_impl.LoginCallBackImpl;
+import com.h520t.assistant.search.call_back_impl.ILoginCallBack;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -16,42 +15,22 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import okhttp3.Call;
 import okhttp3.Callback;
-import okhttp3.Cookie;
-import okhttp3.CookieJar;
-import okhttp3.FormBody;
-import okhttp3.HttpUrl;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
 import okhttp3.Response;
 
-@SuppressLint("Registered")
-public class LoginUtil  {
+public class LoginUtils {
     private String mStudentID,mPassword,mVerifyCode;
-    private LoginCallBackImpl mLoginCallBack;
-    private SearchScoreUtil mScoreUtil;
+    private ILoginCallBack mLoginCallBack;
+    private SearchScoreUtils mScoreUtil;
 
+    public LoginUtils() { }
 
-    private CookieJar mCookieJar = new CookieJar() {
-        @Override
-        public void saveFromResponse(@NonNull HttpUrl url, @NonNull List<Cookie> cookies) {}
-        @Override
-        public List<Cookie> loadForRequest(@NonNull HttpUrl url) {
-            return Constant.sCookieList;
-        }
-    };
-
-    public LoginUtil() {
-    }
-
-    public void setScoreUtil(SearchScoreUtil scoreUtil) {
+    public void setScoreUtil(SearchScoreUtils scoreUtil) {
         mScoreUtil = scoreUtil;
     }
 
@@ -67,7 +46,7 @@ public class LoginUtil  {
         mVerifyCode = verifyCode;
     }
 
-    public void setLoginCallBack(LoginCallBackImpl loginCallBack) {
+    public void setLoginCallBack(ILoginCallBack loginCallBack) {
         mLoginCallBack = loginCallBack;
     }
 
@@ -75,23 +54,7 @@ public class LoginUtil  {
     public  void getCookie() {
         Constant.sCookie = null;
         Constant.sCookieList = null;
-        OkHttpClient mCookieClient = new OkHttpClient().newBuilder()
-                .cookieJar(new CookieJar() {
-                    private final HashMap<String, List<Cookie>> cookieStore = new HashMap<>();
-                    @Override
-                    public void saveFromResponse(@NonNull HttpUrl url, @NonNull List<Cookie> cookies) {
-                        cookieStore.put(url.host(), cookies);
-                        Constant.sCookieList = cookies;
-                        Constant.sCookie = Constant.sCookieList.toString();
-                    }
-                    @Override
-                    public List<Cookie> loadForRequest(@NonNull HttpUrl url) {
-                        List<Cookie> cookies = cookieStore.get(url.host());
-                        return cookies != null ? cookies : new ArrayList<>();
-                    }
-                }).build();
-        Request request = new Request.Builder().url(Constant.CHECK_CODE_URL).build();
-        mCookieClient.newCall(request).enqueue(new Callback() {
+        Callback callback = new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) { }
             @Override
@@ -103,29 +66,13 @@ public class LoginUtil  {
                     mLoginCallBack.setVerifyImg();
                 }
             }
-        });
+        };
+        HttpUtils.doGet(Constant.CHECK_CODE_URL,callback,null);
     }
 
     public void loginPost(){
         if (!(TextUtils.isEmpty(mVerifyCode)||TextUtils.isEmpty(mStudentID)||TextUtils.isEmpty(mPassword))) {
-            RequestBody requestBody = new FormBody.Builder()
-                    .add("ASP.NET_SessionId", Constant.sCookie)
-                    .add("__VIEWSTATE", Constant.LOGIN_VIEWSTATE)
-                    .add("txtUserName", mStudentID)
-                    .add("Textbox1", "")
-                    .add("TextBox2", mPassword)
-                    .add("txtSecretCode", mVerifyCode)
-                    .add("RadioButtonList1", "学生")
-                    .add("Button1", "")
-                    .add("lbLanguage", "")
-                    .add("hidPdrs", "")
-                    .add("hidsc", "").build();
-            Request request = new Request.Builder()
-                    .url(Constant.POST_LOGIN_URL)
-                    .post(requestBody).build();
-            OkHttpClient loginPostClient = new OkHttpClient().newBuilder().
-                    cookieJar(mCookieJar).build();
-            loginPostClient.newCall(request).enqueue(new Callback() {
+            Callback callback = new Callback() {
                 @Override
                 public void onFailure(@NonNull Call call, @NonNull IOException e) { }
 
@@ -147,15 +94,29 @@ public class LoginUtil  {
                         }else{
                             mLoginCallBack.setVerifyImg();
                         }
-                        //                            Log.i(TAG, "onResponse: html  "+html);
                     }
                     loginGet(name);
                 }
-            });
+            };
+            Map<String,String> params = new HashMap<>();
+            params.put("ASP.NET_SessionId",Constant.sCookie);
+            params.put("__VIEWSTATE", Constant.LOGIN_VIEWSTATE);
+            params.put("txtUserName", mStudentID);
+            params.put("Textbox1","");
+            params.put("TextBox2",mPassword);
+            params.put("txtSecretCode", mVerifyCode);
+            params.put("RadioButtonList1","学生");
+            params.put("Button1","");
+            params.put("lbLanguage","");
+            params.put("hidPdrs","");
+            params.put("hidsc","");
+            HttpUtils.doPost(Constant.POST_LOGIN_URL,callback,null,params);
         }else{
             mLoginCallBack.failedMessage();
 
         }
+
+
     }
     private boolean isSuccessLogin(Document parse) {
         Elements scripts = parse.getElementsByTag("script");
@@ -178,27 +139,27 @@ public class LoginUtil  {
     }
 
     private void loginGet(final String name){
-        Request request = new Request.Builder()
-                .url(Constant.GET_LOGIN_URL+mStudentID)
-                .addHeader("Cookie", Constant.sCookie)
-                .addHeader("Referer", Constant.GET_LOGIN_URL+mStudentID)
-                .addHeader("Host", Constant.HOST)
-                .build();
-        OkHttpClient okHttpClient = new OkHttpClient().newBuilder().cookieJar(mCookieJar).build();
-        okHttpClient.newCall(request).enqueue(new Callback() {
+        Callback callback = new Callback() {
             @Override
-            public void onFailure(@NonNull Call call, @NonNull IOException e) { }
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+            }
+
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) {
                 if (response.isSuccessful()) {
                     try {
-                        mScoreUtil.loginScore(name,mStudentID,mCookieJar);
+                        mScoreUtil.loginScore(name, mStudentID);
                     } catch (UnsupportedEncodingException e) {
                         e.printStackTrace();
                     }
                 }
             }
-        });
+        };
+        Map<String,String> headers = new HashMap<>();
+        headers.put("Cookie", Constant.sCookie);
+        headers.put("Referer", Constant.GET_LOGIN_URL+mStudentID);
+        headers.put("Host", Constant.HOST);
+        HttpUtils.doGet(Constant.GET_LOGIN_URL+mStudentID,callback,headers);
     }
 
     private static Bitmap changeBitmapSize(Bitmap bitmap) {

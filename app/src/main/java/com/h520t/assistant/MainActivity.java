@@ -1,34 +1,19 @@
 package com.h520t.assistant;
 
-import android.annotation.SuppressLint;
-import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 
-import com.avos.avoscloud.AVOSCloud;
 import com.h520t.assistant.fragment.LAFFragment;
 import com.h520t.assistant.fragment.SearchFragment;
 import com.h520t.assistant.fragment.WebsiteFragment;
 import com.h520t.assistant.util.BottomNavigationViewHelper;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.scwang.smartrefresh.layout.api.DefaultRefreshFooterCreator;
-import com.scwang.smartrefresh.layout.api.DefaultRefreshHeaderCreator;
-import com.scwang.smartrefresh.layout.api.RefreshFooter;
-import com.scwang.smartrefresh.layout.api.RefreshHeader;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
-
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
     static {
@@ -44,9 +29,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private FragmentManager fm;
     private Fragment currentF;
-    private static final String TAG = "MainActivity";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void replaceFragment(Fragment fragment){
-        fm = getSupportFragmentManager();
+        FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction transaction = fm.beginTransaction();
         if (currentF == null){
             transaction.add(R.id.frame_layout,fragment);

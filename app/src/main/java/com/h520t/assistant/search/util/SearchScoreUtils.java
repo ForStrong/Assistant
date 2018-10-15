@@ -1,10 +1,9 @@
 package com.h520t.assistant.search.util;
 
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 
 import com.h520t.assistant.search.bean.ScoreBean;
-import com.h520t.assistant.search.call_back_impl.ScoreCallbackImpl;
+import com.h520t.assistant.search.call_back_impl.IScoreCallback;
 import com.jeremyliao.livedatabus.LiveDataBus;
 
 import org.jsoup.Jsoup;
@@ -16,25 +15,21 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import okhttp3.Call;
 import okhttp3.Callback;
-import okhttp3.CookieJar;
-import okhttp3.FormBody;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class SearchScoreUtil  {
+public class SearchScoreUtils {
     private String mStudentID;
-    private ScoreCallbackImpl mScoreCallBack;
-    private CookieJar mCookieJar;
+    private IScoreCallback mScoreCallBack;
     private String mYear,mSemester;
 
-    public SearchScoreUtil(String year,String semester) {
+    public SearchScoreUtils(String year, String semester) {
         getMessage();
         mYear = year;
         mSemester = semester;
@@ -44,7 +39,7 @@ public class SearchScoreUtil  {
         mStudentID = studentID;
     }
 
-    public void setUIImpl(ScoreCallbackImpl UIImpl) {
+    public void setUIImpl(IScoreCallback UIImpl) {
         mScoreCallBack = UIImpl;
     }
 
@@ -64,17 +59,11 @@ public class SearchScoreUtil  {
         });
     }
 
-    public void loginScore(String name, String studentID, CookieJar cookieJar) throws UnsupportedEncodingException {
+    public void loginScore(String name, String studentID) throws UnsupportedEncodingException {
         mStudentID = studentID;
-        mCookieJar = cookieJar;
         final String xm = URLEncoder.encode(name, "GB2312");
         final String loginScoreUrl = Constant.SCORE_SEARCH_URL+mStudentID+"&xm=" + xm + Constant.SCORE_SEARCH_GNMKDM;
-        Request request = new Request.Builder().url(loginScoreUrl)
-                .addHeader("Host", Constant.HOST)
-                .addHeader("Referer", Constant.GET_LOGIN_URL+mStudentID)
-                .addHeader("Cookie", Constant.sCookie).build();
-        OkHttpClient okHttpClient = new OkHttpClient().newBuilder().cookieJar(mCookieJar).build();
-        okHttpClient.newCall(request).enqueue(new Callback() {
+        Callback callback = new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
                 e.printStackTrace();
@@ -86,33 +75,18 @@ public class SearchScoreUtil  {
                 String viewstate = Jsoup.parse(html).select("input[name=__VIEWSTATE]").val();
                 scoreSearch(xm, loginScoreUrl, viewstate);
             }
-        });
+        };
 
+        Map<String,String> headers = new HashMap<>();
+        headers.put("Cookie", Constant.sCookie);
+        headers.put("Referer", Constant.GET_LOGIN_URL+mStudentID);
+        headers.put("Host", Constant.HOST);
+        HttpUtils.doGet(loginScoreUrl,callback,headers);
     }
 
     //-------------------------------------------post成绩查询--------------------------------------------------------------------//
     private void scoreSearch(String xm, String loginScoreUrl, String viewState) {
-        RequestBody requestBody = new FormBody.Builder()
-                .add("xh", mStudentID)
-                .add("xm", xm)
-                .add("gnmkdm", "N121605")
-                .add("ASP.NET_SessionId", Constant.sCookie)
-                .add("__EVENTTARGET", "")
-                .add("__EVENTARGUMENT", "")
-                .add("__VIEWSTATE", viewState)
-                .add("ddlxn", mYear)
-                .add("ddlxq", mSemester)
-                .add("btnCx", "查询").build();
-
-        Request request = new Request.Builder().url(loginScoreUrl)
-                .addHeader("Host", Constant.HOST)
-                .addHeader("Referer", loginScoreUrl)
-                .addHeader("Cookie", Constant.sCookie)
-                .post(requestBody).build();
-
-        OkHttpClient okHttpClient = new OkHttpClient().newBuilder().cookieJar(mCookieJar).build();
-
-        okHttpClient.newCall(request).enqueue(new Callback() {
+        Callback callback = new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) { }
             @Override
@@ -139,7 +113,24 @@ public class SearchScoreUtil  {
                     mScoreCallBack.successGetGrade();
                 }
             }
-        });
+        };
+        Map<String,String> headers = new HashMap<>();
+        headers.put("Cookie", Constant.sCookie);
+        headers.put("Referer", loginScoreUrl);
+        headers.put("Host", Constant.HOST);
+
+        Map<String,String> params = new HashMap<>();
+        params.put("xh", mStudentID);
+        params.put("xm", xm);
+        params.put("gnmkdm", "N121605");
+        params.put("ASP.NET_SessionId", Constant.sCookie);
+        params.put("__EVENTTARGET", "");
+        params.put("__EVENTARGUMENT", "");
+        params.put("__VIEWSTATE", viewState);
+        params.put("ddlxn", mYear);
+        params.put("ddlxq", mSemester);
+        params.put("btnCx", "查询");
+        HttpUtils.doPost(loginScoreUrl,callback,headers,params);
     }
 
 }

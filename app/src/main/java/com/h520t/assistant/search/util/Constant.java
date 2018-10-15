@@ -9,13 +9,6 @@ import java.util.List;
 
 import okhttp3.Cookie;
 
-/**
- * @author Administrator
- * @des ${TODO}
- * @Version $Rev$
- * @updateAuthor $Author$
- * @updateDes ${TODO}
- */
 public class Constant {
 
     public static List<Cookie> sCookieList;

@@ -14,12 +14,11 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.h520t.assistant.R;
-import com.h520t.assistant.search.call_back_impl.LoginCallBackImpl;
-import com.h520t.assistant.search.call_back_impl.ScoreCallbackImpl;
+import com.h520t.assistant.search.call_back_impl.ILoginCallBack;
+import com.h520t.assistant.search.call_back_impl.IScoreCallback;
 import com.h520t.assistant.search.util.Constant;
-import com.h520t.assistant.search.util.LoginUtil;
-import com.h520t.assistant.search.util.SearchScoreUtil;
-import com.jeremyliao.livedatabus.LiveDataBus;
+import com.h520t.assistant.search.util.LoginUtils;
+import com.h520t.assistant.search.util.SearchScoreUtils;
 
 
 public class SearchActivity extends AppCompatActivity {
@@ -34,13 +33,13 @@ public class SearchActivity extends AppCompatActivity {
     private Button mBtn_login;
     private Toolbar mToolbar;
 
-    private LoginUtil mLoginUtil;
-    private ScoreCallbackImpl mScoreCallBack =  new ScoreCallbackImpl() {
+    private LoginUtils mLoginUtils;
+    private IScoreCallback mScoreCallBack =  new IScoreCallback() {
         @Override
         public void failedSemester() {
             runOnUiThread(() -> {
                 Toast.makeText(SearchActivity.this, "还无法查询该学期的成绩", Toast.LENGTH_SHORT).show();
-                mLoginUtil.getCookie();
+                mLoginUtils.getCookie();
                 mVerifyEt.setText("");
             });
         }
@@ -56,7 +55,7 @@ public class SearchActivity extends AppCompatActivity {
         }
     };
 
-    private LoginCallBackImpl mLoginCallBack = new LoginCallBackImpl() {
+    private ILoginCallBack mLoginCallBack = new ILoginCallBack() {
         @Override
         public void setVerifyImg() {
             runOnUiThread(() -> {
@@ -68,7 +67,7 @@ public class SearchActivity extends AppCompatActivity {
         public void failedStudentID() {
             runOnUiThread(() -> {
                 Toast.makeText(SearchActivity.this, "用户名不存在或未按照要求参加教学活动", Toast.LENGTH_SHORT).show();
-                mLoginUtil.getCookie();
+                mLoginUtils.getCookie();
                 mStudentIDEt.setText("");
                 mVerifyEt.setText("");
             });
@@ -77,7 +76,7 @@ public class SearchActivity extends AppCompatActivity {
         public void failedPassword() {
             runOnUiThread(() -> {
                 Toast.makeText(SearchActivity.this, "密码错误", Toast.LENGTH_SHORT).show();
-                mLoginUtil.getCookie();
+                mLoginUtils.getCookie();
                 mPasswordEt.setText("");
                 mVerifyEt.setText("");
             });
@@ -86,7 +85,7 @@ public class SearchActivity extends AppCompatActivity {
         public void failedVerifyCode() {
             runOnUiThread(() -> {
                 Toast.makeText(SearchActivity.this, "验证码错误", Toast.LENGTH_SHORT).show();
-                mLoginUtil.getCookie();
+                mLoginUtils.getCookie();
                 mVerifyEt.setText("");
             });
         }
@@ -94,7 +93,7 @@ public class SearchActivity extends AppCompatActivity {
         public void failedMessage() {
             runOnUiThread(() -> {
                 Toast.makeText(SearchActivity.this, "填写完整信息", Toast.LENGTH_SHORT).show();
-                mLoginUtil.getCookie();
+                mLoginUtils.getCookie();
             });
         }
     };
@@ -115,13 +114,12 @@ public class SearchActivity extends AppCompatActivity {
         mVerifyEt = findViewById(R.id.security_code);
         mToolbar = findViewById(R.id.search_toolbar);
 
-        mLoginUtil = new LoginUtil();
-        mLoginUtil.setLoginCallBack(mLoginCallBack);
-        mLoginUtil.getCookie();
+        mLoginUtils = new LoginUtils();
+        mLoginUtils.setLoginCallBack(mLoginCallBack);
+        mLoginUtils.getCookie();
 
         initViewClick();
     }
-
     public void initViewClick() {
         mToolbar.setNavigationOnClickListener(view -> finish());
         //选择学年和学期
@@ -146,27 +144,27 @@ public class SearchActivity extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> adapterView) { }
         });
         //刷新图片
-        mVerifyCodeBt.setOnClickListener(view ->mLoginUtil.getCookie());
+        mVerifyCodeBt.setOnClickListener(view -> mLoginUtils.getCookie());
 
         //获取成绩
         mBtn_login.setOnClickListener(view -> {
             studentID = mStudentIDEt.getText().toString();
             password = mPasswordEt.getText().toString();
             verifyCode = mVerifyEt.getText().toString();
-            SearchScoreUtil searchScoreUtil = new SearchScoreUtil(year,semester);
-            searchScoreUtil.setUIImpl(mScoreCallBack);
-            mLoginUtil.setScoreUtil(searchScoreUtil);
-            mLoginUtil.setStudentID(studentID);
-            mLoginUtil.setPassword(password);
-            mLoginUtil.setVerifyCode(verifyCode);
-            mLoginUtil.loginPost();
+            SearchScoreUtils searchScoreUtils = new SearchScoreUtils(year,semester);
+            searchScoreUtils.setUIImpl(mScoreCallBack);
+            mLoginUtils.setScoreUtil(searchScoreUtils);
+            mLoginUtils.setStudentID(studentID);
+            mLoginUtils.setPassword(password);
+            mLoginUtils.setVerifyCode(verifyCode);
+            mLoginUtils.loginPost();
         });
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        mLoginUtil.getCookie();
+        mLoginUtils.getCookie();
         mVerifyEt.setText("");
     }
 }

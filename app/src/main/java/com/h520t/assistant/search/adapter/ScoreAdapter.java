@@ -92,7 +92,7 @@ public class ScoreAdapter extends RecyclerView.Adapter<ScoreAdapter.ViewHolder> 
         TextView className,classNature,credit,midTermGrade,finalGrade,experimentalGrade,grade,makeupGrade;
         LinearLayout midTermGradeLayout,experimentalGradeLayout,makeupGradeLayout;
 
-        public ViewHolder(View itemView) {
+        ViewHolder(View itemView) {
             super(itemView);
             className = itemView.findViewById(R.id.className);
             classNature = itemView.findViewById(R.id.classNature);
