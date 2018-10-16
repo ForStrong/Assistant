@@ -22,7 +22,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,7 +63,6 @@ public class LAFFragment extends Fragment {
     SmartRefreshLayout mRefreshLayout;
     int skipCount = 0;
     Boolean mIsRefresh;
-    private static final String TAG = "LAFFragment";
     private LAFAdapter mAdapter;
     private byte[] mBitmapBytes;
     Boolean isNoMore = false;
@@ -107,13 +105,10 @@ public class LAFFragment extends Fragment {
         });
         getData(true);
         mRefreshLayout.setOnRefreshListener(refreshLayout -> {
+            skipCount = 0;
+            isNoMore = false;
             getData(true);
-            if (isNoMore){
-                refreshLayout.finishRefresh();
-                refreshLayout.setNoMoreData(false);
-            }else {
-                refreshLayout.finishRefresh(1000);
-            }
+            refreshLayout.finishRefresh(1000);
         });
         mRefreshLayout.setOnLoadMoreListener(refreshLayout -> {
             getData(false);
@@ -128,7 +123,7 @@ public class LAFFragment extends Fragment {
         fabAlbum.setOnClickListener(view -> getPhotoByAlbum());
     }
 
-    private void getData(Boolean isRefresh) {
+    public void getData(Boolean isRefresh) {
         mIsRefresh = isRefresh;
         AVQuery<AVObject> avQuery = new AVQuery<>("lostProperty");
         avQuery.addDescendingOrder("data");
@@ -140,17 +135,10 @@ public class LAFFragment extends Fragment {
         avQuery.findInBackground(new FindCallback<AVObject>() {
             @Override
             public void done(List<AVObject> list, AVException e) {
-                if (mList!=null&&list.size()>0){
-                    if (mList.get(0).getObjectId().equals(list.get(0).getObjectId())){
-                        isNoMore = true;
-                        Log.i(TAG, "done: date一样");
-                        return;
-                    }
-                }else if (list.size()==0){
+                if (list.size() == 0) {
                     isNoMore = true;
-                }
-
-                if (list.size()>0) {
+                    return;
+                }else {
                     LiveDataBus.get().with("key").postValue(list);
                     isNoMore = false;
                 }
@@ -159,7 +147,6 @@ public class LAFFragment extends Fragment {
     }
 
     public  void getPhotoByCamera(){
-
         File outputImage = new File(Objects.requireNonNull(getActivity()).getExternalCacheDir(),"output_image.jpg");
         try {
             if (outputImage.exists()){
@@ -169,7 +156,6 @@ public class LAFFragment extends Fragment {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         if (Build.VERSION.SDK_INT>=24){
             imageUri = FileProvider.getUriForFile(getActivity(),
                     "com.h520t.assistant.fileprovider",outputImage);
@@ -182,10 +168,6 @@ public class LAFFragment extends Fragment {
         startActivityForResult(intent,TAKE_PHOTO);
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
 
     public  void getPhotoByAlbum(){
         if (ContextCompat.checkSelfPermission(Objects.requireNonNull(getActivity())

@@ -4,20 +4,17 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.avos.avoscloud.AVOSCloud;
 import com.h520t.assistant.MainActivity;
 import com.h520t.assistant.R;
 
 public class SplashActivity extends AppCompatActivity {
-    private static final String TAG = "SplashActivity";
 
     @SuppressLint("ResourceAsColor")
     @Override
@@ -33,7 +30,6 @@ public class SplashActivity extends AppCompatActivity {
         window.setStatusBarColor(android.R.color.white);
 
         ImageView splashIcon = findViewById(R.id.splash_icon);
-        TextView splashTv = findViewById(R.id.splash_tv);
 
 
 
@@ -57,7 +53,6 @@ public class SplashActivity extends AppCompatActivity {
             }
         });
         splashIcon.setAnimation(animation);
-        splashTv.setAnimation(animation);
         AVOSCloud.initialize(this,"wRDwDSiBV3gO2WSIYnaVXftd-gzGzoHsz","wRup1G9M0qiTHb7i9IApveJE");
         AVOSCloud.setDebugLogEnabled(true);
     }

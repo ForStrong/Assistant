@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -51,20 +52,18 @@ public class LAFAdapter extends RecyclerView.Adapter<LAFAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         AVObject avObject = mAVObjects.get(position);
+        String phoneNumber = (String) avObject.get("phone");
         String deviceID = (String) avObject.get("deviceID");
-        holder.lafPhone.setText((String)avObject.get("phone"));
+
+        holder.lafPhone.setText(phoneNumber);
         holder.lafGoodName.setText((String)avObject.get("lostGoods"));
         holder.lafGoodPlace.setText((String)avObject.get("lostPlace"));
         Date date = (Date) avObject.get("data");
         @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss ");
         holder.putTime.setText(simpleDateFormat.format(date));
-
-
         AVFile avFile = (AVFile) avObject.get("lostImg");
         String url = avFile.getUrl();
-        Glide.with(mContext).load(url).apply(RequestOptions.bitmapTransform(
-                new RoundedCornersTransformation(4,0,
-                        RoundedCornersTransformation.CornerType.ALL))).into(holder.lafGoodImg);
+        Glide.with(mContext).load(url).into(holder.lafGoodImg);
         if (Build.SERIAL.equals(deviceID)) {
             holder.lafMenu.setVisibility(View.VISIBLE);
             holder.lafMenu.setOnClickListener(view -> {
@@ -85,8 +84,8 @@ public class LAFAdapter extends RecyclerView.Adapter<LAFAdapter.ViewHolder> {
                             Intent intent = new Intent(mActivity,TheLostInformationActivity.class);
                             intent.putExtra(TheLostInformationActivity.AV_OBJECT,object);
                             mActivity.startActivity(intent);
-                            mAVObjects.remove(position);
-                            notifyDataSetChanged();
+               /*             mAVObjects.remove(position);
+                            notifyDataSetChanged();*/
                             Toast.makeText(mContext, "alter", Toast.LENGTH_SHORT).show();
                             break;
                         default:
@@ -98,6 +97,14 @@ public class LAFAdapter extends RecyclerView.Adapter<LAFAdapter.ViewHolder> {
             });
         }else {
             holder.lafMenu.setVisibility(View.INVISIBLE);
+        }
+        if (phoneNumber.length()>0) {
+            holder.lafPhone.setOnClickListener(view -> {
+                Intent intent=new Intent();
+                intent.setAction(Intent.ACTION_DIAL);   //android.intent.action.DIAL
+                intent.setData(Uri.parse("tel:"+phoneNumber));
+                mActivity.startActivity(intent);
+            });
         }
 
     }

@@ -13,8 +13,10 @@ import com.h520t.assistant.R;
 import com.h520t.assistant.search.adapter.GPAAdapter;
 import com.h520t.assistant.search.bean.GPABean;
 import com.h520t.assistant.search.util.Constant;
+import com.h520t.assistant.util.CalcUtils;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
@@ -34,19 +36,22 @@ public class GPAInformationActivity extends AppCompatActivity {
         String title = intent.getStringExtra(GPAInformationActivity.TOOLBAR_TITLE);
         toolbar.setTitle(title);
 
-     /*   BigDecimal multiply = new BigDecimal(0);
-        BigDecimal gpaCount = new BigDecimal(0);
-        TextView gradePoint = findViewById(R.id.gradePoint);
+
+        //平均学分绩点计算
+        Double creditCount = Double.valueOf("0");
+        Double count = Double.valueOf("0");
         for (GPABean gpaBean  : Constant.sGPABeans) {
-            BigDecimal credit = new BigDecimal(gpaBean.getCredit());
-            BigDecimal gpa = new BigDecimal(gpaBean.getGpa());
-            multiply.add(credit.multiply(gpa));
-            gpaCount.add(gpa);
+            double credit = Double.parseDouble(gpaBean.getCredit());
+            double gpa = Double.parseDouble(gpaBean.getGpa());
+            creditCount = CalcUtils.add(credit,creditCount);
+            Double multiply = CalcUtils.multiply(credit, gpa, 3, RoundingMode.HALF_UP);
+            count = CalcUtils.add(multiply,count);
         }
-        DecimalFormat decimalFormat=new DecimalFormat(".00");
-        double result = multiply.divide(gpaCount, BigDecimal.ROUND_HALF_UP).doubleValue();
-        String format = decimalFormat.format(result);
-        gradePoint.setText(format);*/
+        Double divide = CalcUtils.divide(count, creditCount, 2, RoundingMode.HALF_UP);
+        Log.i(TAG, "onCreate: "+creditCount+"    "+count+"    "+divide);
+        TextView gradePoint = findViewById(R.id.gradePoint);
+        gradePoint.setText(String.format("%s", divide));
+
 
 
         RecyclerView recyclerView = findViewById(R.id.gpa_score_rv);

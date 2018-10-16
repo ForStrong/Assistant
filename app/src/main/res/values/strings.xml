@@ -35,7 +35,7 @@
 
 
     <!--LAFInformation-->
-    <string name="contactWay">联系电话</string>
+    <string name="contactWay">联系电话(选填)</string>
     <string name="lostPlace">遗失地点(eg:教学楼东A101)</string>
     <string name="lostGoods">遗失物品(eg:校园卡)</string>
     <string name="laf_menu_alter">修改</string>
