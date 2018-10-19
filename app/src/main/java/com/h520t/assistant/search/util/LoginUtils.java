@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.h520t.assistant.search.call_back_impl.ILoginCallBack;
 
@@ -27,7 +28,7 @@ import okhttp3.Response;
 public class LoginUtils {
     private String mStudentID,mPassword,mVerifyCode;
     private ILoginCallBack mLoginCallBack;
-
+    private static final String TAG = "LoginUtils";
     public LoginUtils() { }
 
     public void setStudentID(String studentID) {
@@ -52,14 +53,20 @@ public class LoginUtils {
         Constant.sCookieList = null;
         Callback callback = new Callback() {
             @Override
-            public void onFailure(@NonNull Call call, @NonNull IOException e) { }
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                mLoginCallBack.failedGet();
+            }
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                byte[] verificationCode = Objects.requireNonNull(response.body()).bytes();
-                if (verificationCode != null && verificationCode.length > 0) {
-                    Bitmap bitmap = BitmapFactory.decodeByteArray(verificationCode, 0, verificationCode.length);
-                    Bitmap resizeBitmap = changeBitmapSize(bitmap);
-                    mLoginCallBack.setVerifyImg(resizeBitmap);
+                if (response.isSuccessful()) {
+                    byte[] verificationCode = Objects.requireNonNull(response.body()).bytes();
+                    if (verificationCode != null && verificationCode.length > 0) {
+                        Bitmap bitmap = BitmapFactory.decodeByteArray(verificationCode, 0, verificationCode.length);
+                        Bitmap resizeBitmap = changeBitmapSize(bitmap);
+                        mLoginCallBack.setVerifyImg(resizeBitmap);
+                    }
+                }else {
+                    mLoginCallBack.failedGet();
                 }
             }
         };
@@ -70,12 +77,15 @@ public class LoginUtils {
         if (!(TextUtils.isEmpty(mVerifyCode)||TextUtils.isEmpty(mStudentID)||TextUtils.isEmpty(mPassword))) {
             Callback callback = new Callback() {
                 @Override
-                public void onFailure(@NonNull Call call, @NonNull IOException e) { }
+                public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                    mLoginCallBack.failedGet();
+                }
 
                 @Override
                 public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                     String name = "";
                     if (response.isSuccessful()) {
+                        Log.i(TAG, "onResponse: "+response.isSuccessful());
                         String html = Objects.requireNonNull(response.body()).string();
                         Document parse = Jsoup.parse(html);
                         if (!isSuccessLogin(parse))
@@ -89,6 +99,7 @@ public class LoginUtils {
                             name = text.substring(0, text.length() - 2);
                         }else{
                             mLoginCallBack.failedVerifyCode();
+                            return;
                         }
                     }
                     loginGet(name);
@@ -135,6 +146,7 @@ public class LoginUtils {
         Callback callback = new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                mLoginCallBack.failedGet();
             }
 
             @Override

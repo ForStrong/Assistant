@@ -6,7 +6,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -18,8 +17,6 @@ import android.widget.Toast;
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVFile;
 import com.avos.avoscloud.AVObject;
-import com.avos.avoscloud.AVQuery;
-import com.avos.avoscloud.GetCallback;
 import com.avos.avoscloud.GetDataCallback;
 import com.avos.avoscloud.SaveCallback;
 import com.bumptech.glide.Glide;
@@ -62,6 +59,8 @@ public class TheLostInformationActivity extends AppCompatActivity {
             Bitmap bitmap = BitmapFactory.decodeByteArray(mBytes, 0, mBytes.length);
             lostImg.setImageBitmap(bitmap);
         }
+
+
         mObject = intent.getParcelableExtra(TheLostInformationActivity.AV_OBJECT);
         if (mObject!=null){
             lostGoods.setText((String)mObject.get("lostGoods"));

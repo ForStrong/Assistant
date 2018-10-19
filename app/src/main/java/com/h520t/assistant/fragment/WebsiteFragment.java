@@ -32,12 +32,18 @@ import java.util.Collections;
 public class WebsiteFragment extends Fragment {
     RecyclerView mRecyclerView;
     ArrayList<String> url_name;
-    Banner mBanner;
-    private ArrayList<Integer> images;
-    String[] url = {"http://jwjx.njit.edu.cn","http://jwc.njit.edu.cn","http://english.njit.edu.cn",
-            "http://opac.lib.njit.edu.cn/opac/search.php"
+    String[] url = {
+             "http://jwc.njit.edu.cn"
             ,"http://cwxt.njit.edu.cn/WFManager/login.jsp"
-            ,"http://sjjx.njit.edu.cn:8080/"};
+            ,"https://e5ed8ab809fa486f1421428215434c6e.njit.casbs.cn/intoMyCourses.action"
+            ,"http://opac.lib.njit.edu.cn/opac/search.php"
+            ,"http://jwjx.njit.edu.cn"
+            ,"http://my.njit.edu.cn/"
+            ,"https://sjjx.njit.casbs.cn/"
+            ,"https://english.njit.casbs.cn/"
+            ,"http://sjjx.njit.edu.cn:8080/"
+            ,"https://baoxiu.njit.casbs.cn/Repair/"
+            };
 
     @SuppressLint("ValidFragment")
     private WebsiteFragment() {
@@ -51,9 +57,7 @@ public class WebsiteFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_website, container, false);
         mRecyclerView = view.findViewById(R.id.recycler_view);
-        mBanner = view.findViewById(R.id.banner);
         url_name = new ArrayList<>();
-        images = new ArrayList<>();
         return view;
     }
 
@@ -80,10 +84,7 @@ public class WebsiteFragment extends Fragment {
 
             }
         }));
-        images.add(R.drawable.college1);
-        images.add(R.drawable.college2);
-        images.add(R.drawable.library);
-        mBanner.setImages(images).setImageLoader(new GlideImageLoader()).start();
+
     }
     public static WebsiteFragment getInstance(){
         return WebsiteFragmentViewHolder.WEBSITE_FRAGMENT;

@@ -15,7 +15,6 @@ public class Constant {
     public static List<Cookie> sCookieList;
     public static String sCookie;
 
-    public static Bitmap verifyBitmap;
     public static final String CHECK_CODE_URL = "http://jwjx.njit.edu.cn/CheckCode.aspx";
     public static final String POST_LOGIN_URL = "http://jwjx.njit.edu.cn/default2.aspx";
     public static final String LOGIN_VIEWSTATE = "dDwxNTMxMDk5Mzc0Ozs+nttZfhG6oXx92HiCAr5KIDfqE08=";
@@ -29,10 +28,7 @@ public class Constant {
     public static final String SCORE_SEARCH_GNMKDM = "&gnmkdm=N121605";
     //绩点成绩查询
     public static ArrayList<GPABean> sGPABeans = new ArrayList<>();
-    public static String semester="semester";
-    public static String academicYear="academicYear";
-    public static String calendarYear="calendarYear";
-    public static final String GPA_SEARCH_URL = " http://jwjx.njit.edu.cn/xscjcx.aspx?xh=";
+    public static final String GPA_SEARCH_URL = "http://jwjx.njit.edu.cn/xscjcx.aspx?xh=";
     public static final String GPA_GNMKDM = "&gnmkdm=N121617";
 
 }

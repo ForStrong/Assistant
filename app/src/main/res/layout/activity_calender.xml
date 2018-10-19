@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    tools:context=".search.activity.information.CalenderActivity">
+
+    <LinearLayout
+        android:id="@+id/IvLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/calender_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorPrimary"
+            app:navigationIcon="@drawable/back"
+            app:title="校历查询"
+            app:titleTextColor="@android:color/white" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="南京工程学院2018-2019学年校历"
+            android:textColor="@android:color/black"
+            android:gravity="center"
+            android:textSize="22sp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="2018-10-16 南工程助手"
+            android:gravity="start"
+            android:layout_marginStart="40dp"
+            android:textSize="16sp"/>
+
+        <ImageView
+            android:id="@+id/calenderIv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center"
+            android:scaleType="centerInside"
+            android:src="@drawable/calender" />
+
+    </LinearLayout>
+
+    <com.bm.library.PhotoView
+        android:id="@+id/calenderPv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:background="@android:color/black"
+        android:fitsSystemWindows="true"
+        android:scaleType="centerInside"
+        android:src="@drawable/calender"/>
+
+</LinearLayout>

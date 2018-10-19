@@ -41,7 +41,8 @@
         </activity>
         <activity android:name=".search.activity.information.ScoreActivity" />
         <activity android:name=".search.activity.search.GPAActivity" />
-        <activity android:name=".search.activity.information.GPAInformationActivity"></activity>
+        <activity android:name=".search.activity.information.GPAInformationActivity" />
+        <activity android:name=".search.activity.information.CalenderActivity"></activity>
     </application>
 
 </manifest>

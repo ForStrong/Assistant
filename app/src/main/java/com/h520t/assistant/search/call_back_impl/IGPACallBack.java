@@ -14,6 +14,4 @@ import java.util.ArrayList;
 public interface IGPACallBack {
     void failedSemester();
     void successOfSemester();
-    void successOfAcademicYear();
-    void successOfCalendarYear();
 }

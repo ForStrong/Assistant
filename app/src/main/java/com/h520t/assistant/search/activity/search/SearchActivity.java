@@ -59,8 +59,17 @@ public class SearchActivity extends AppCompatActivity {
 
     private ILoginCallBack mLoginCallBack = new ILoginCallBack() {
         @Override
+        public void failedGet() {
+            runOnUiThread(() -> {
+                mBtn_login.setText("查询绩点");
+                Toast.makeText(SearchActivity.this, "登陆教务网需要内网登陆", Toast.LENGTH_SHORT).show();
+            });
+        }
+
+        @Override
         public void setVerifyImg(Bitmap bitmap) {
             runOnUiThread(() -> {
+
                 mBtn_login.setText("查询成绩");
                 if (bitmap!=null) {
                     verifyImage.setImageBitmap(bitmap);

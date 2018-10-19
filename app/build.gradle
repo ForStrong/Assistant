@@ -51,6 +51,8 @@ dependencies {
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-14'
     implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-14'
 
+    implementation 'com.bm.photoview:library:1.4.1'
+
     implementation 'org.jsoup:jsoup:1.11.3'
     //没有使用特殊Header，可以不加这行
     //---------------------------LeanCloud---------------------------------

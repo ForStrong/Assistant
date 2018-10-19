@@ -13,12 +13,16 @@
     <string name="studentPassword">教务密码</string>
 
     <string-array name="website_url">
-        <item>"正方登录"</item>
         <item>"教务网"</item>
-        <item>"外国语学院"</item>
-        <item>"图书查找"</item>
         <item>"财务处"</item>
+        <item>爱课程</item>
+        <item>"图书查找"</item>
+        <item>"正方登录"</item>
+        <item>"信息门户"</item>
+        <item>"实践教学"</item>
+        <item>"外语教学网"</item>
         <item>素质拓选学分</item>
+        <item>业务故障报修(外网)</item>
     </string-array>
 
     <string-array name="years_select">

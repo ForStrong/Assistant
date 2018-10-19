@@ -14,14 +14,6 @@
         app:title="@string/title_website"
         app:titleTextColor="@color/toolbar_title"/>
 
-    <com.youth.banner.Banner
-        android:id="@+id/banner"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_margin="3dp"
-        android:layout_marginBottom="10dp"
-        android:layout_weight="1" />
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"

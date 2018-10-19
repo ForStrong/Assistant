@@ -4,7 +4,6 @@ package com.h520t.assistant.search.util;
 import android.support.annotation.NonNull;
 
 import com.h520t.assistant.search.bean.GPABean;
-import com.h520t.assistant.search.bean.ScoreBean;
 import com.h520t.assistant.search.call_back_impl.IGPACallBack;
 
 import org.jsoup.Jsoup;
@@ -26,12 +25,11 @@ import okhttp3.Response;
 public class GPAUtils {
     private String mStudentID;
     private IGPACallBack mGPACallBack;
-    private String mYear,mSemester,mSearchID;
+    private String mYear,mSemester;
 
-    public GPAUtils(String studentID, IGPACallBack GPACallBack,String searchID, String year, String semester) {
+    public GPAUtils(String studentID, IGPACallBack GPACallBack, String year, String semester) {
         mYear = year;
         mSemester = semester;
-        mSearchID = searchID;
         mStudentID = studentID;
         mGPACallBack = GPACallBack;
     }

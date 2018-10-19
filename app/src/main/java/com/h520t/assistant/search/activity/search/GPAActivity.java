@@ -1,5 +1,6 @@
 package com.h520t.assistant.search.activity.search;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -16,16 +17,11 @@ import android.widget.Toast;
 
 import com.h520t.assistant.R;
 import com.h520t.assistant.search.activity.information.GPAInformationActivity;
-import com.h520t.assistant.search.activity.information.ScoreActivity;
-import com.h520t.assistant.search.adapter.GPAAdapter;
-import com.h520t.assistant.search.bean.GPABean;
 import com.h520t.assistant.search.call_back_impl.IGPACallBack;
 import com.h520t.assistant.search.call_back_impl.ILoginCallBack;
 import com.h520t.assistant.search.util.Constant;
 import com.h520t.assistant.search.util.GPAUtils;
 import com.h520t.assistant.search.util.LoginUtils;
-
-import java.util.ArrayList;
 
 public class GPAActivity extends AppCompatActivity {
 
@@ -40,6 +36,7 @@ public class GPAActivity extends AppCompatActivity {
     private Button mBtn_login;
     private Toolbar mToolbar;
     private LoginUtils mLoginUtils;
+    private ProgressDialog mDialog;
 
     IGPACallBack mGPACallBack = new IGPACallBack() {
         @Override
@@ -60,19 +57,20 @@ public class GPAActivity extends AppCompatActivity {
             intent.putExtra(GPAInformationActivity.TOOLBAR_TITLE, year + " " + semester + " 绩点");
             startActivity(intent);
         }
-
-        @Override
-        public void successOfAcademicYear() {
-
-        }
-
-        @Override
-        public void successOfCalendarYear() {
-
-        }
     };
 
     private ILoginCallBack mLoginCallBack = new ILoginCallBack() {
+        @Override
+        public void failedGet() {
+            runOnUiThread(() -> {
+                mBtn_login.setText("查询绩点");
+                if (mDialog.isShowing()) {
+                    mDialog.dismiss();
+                }
+                Toast.makeText(GPAActivity.this, "登陆教务网需要内网登陆", Toast.LENGTH_SHORT).show();
+            });
+        }
+
         @Override
         public void setVerifyImg(Bitmap bitmap) {
             runOnUiThread(() -> {
@@ -86,6 +84,7 @@ public class GPAActivity extends AppCompatActivity {
         public void failedStudentID() {
             runOnUiThread(() -> {
                 mBtn_login.setText("查询绩点");
+                mDialog.cancel();
                 Toast.makeText(GPAActivity.this, "用户名不存在或未按照要求参加教学活动", Toast.LENGTH_SHORT).show();
                 mLoginUtils.getCookie();
                 mStudentIDEt.setText("");
@@ -96,6 +95,7 @@ public class GPAActivity extends AppCompatActivity {
         public void failedPassword() {
             runOnUiThread(() -> {
                 mBtn_login.setText("查询绩点");
+                mDialog.cancel();
                 Toast.makeText(GPAActivity.this, "密码错误", Toast.LENGTH_SHORT).show();
                 mLoginUtils.getCookie();
                 mPasswordEt.setText("");
@@ -106,6 +106,7 @@ public class GPAActivity extends AppCompatActivity {
         public void failedVerifyCode() {
             runOnUiThread(() -> {
                 mBtn_login.setText("查询绩点");
+                mDialog.cancel();
                 Toast.makeText(GPAActivity.this, "验证码错误", Toast.LENGTH_SHORT).show();
                 mLoginUtils.getCookie();
                 mVerifyEt.setText("");
@@ -115,6 +116,7 @@ public class GPAActivity extends AppCompatActivity {
         public void failedMessage() {
             runOnUiThread(() -> {
                 mBtn_login.setText("查询绩点");
+                mDialog.cancel();
                 Toast.makeText(GPAActivity.this, "填写完整信息", Toast.LENGTH_SHORT).show();
                 mLoginUtils.getCookie();
             });
@@ -122,7 +124,7 @@ public class GPAActivity extends AppCompatActivity {
 
         @Override
         public void successLogin(String xm) {
-            GPAUtils gpaUtils = new GPAUtils(studentID,mGPACallBack, Constant.semester,year,semester);
+            GPAUtils gpaUtils = new GPAUtils(studentID,mGPACallBack,year,semester);
             gpaUtils.loginGPA(xm);
         }
     };
@@ -179,6 +181,10 @@ public class GPAActivity extends AppCompatActivity {
         mBtn_login.setOnClickListener(view -> {
             Button loginBt = view.findViewById(R.id.gpa_login_bt);
             loginBt.setText("查询中...");
+            mDialog = new ProgressDialog(this);
+            mDialog.setTitle("正在查询");
+            mDialog.show();
+
             studentID = mStudentIDEt.getText().toString();
             password = mPasswordEt.getText().toString();
             verifyCode = mVerifyEt.getText().toString();
@@ -194,5 +200,15 @@ public class GPAActivity extends AppCompatActivity {
         super.onStop();
         mLoginUtils.getCookie();
         mVerifyEt.setText("");
+        mDialog.cancel();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (mDialog.isShowing()) {
+            mDialog.cancel();
+        }else {
+            super.onBackPressed();
+        }
     }
 }

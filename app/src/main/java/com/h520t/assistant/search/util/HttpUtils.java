@@ -1,6 +1,7 @@
 package com.h520t.assistant.search.util;
 
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -42,7 +43,11 @@ public class HttpUtils {
         FormBody.Builder bodyBuilder = new FormBody.Builder();
         if (params!=null&&params.size()>0) {
             for (Map.Entry<String,String> param  : params.entrySet()) {
-                bodyBuilder.add(param.getKey(),param.getValue());
+                if (param.getKey()!=null&&param.getValue()!=null) {
+                    bodyBuilder.add(param.getKey(),param.getValue());
+                }else {
+                    return;
+                }
             }
         }
         RequestBody body = bodyBuilder.build();
@@ -57,6 +62,7 @@ public class HttpUtils {
     
     
     private static class  HttpUtilsHolder {
-        private static final OkHttpClient CLIENT = new OkHttpClient.Builder().cookieJar(new MyCookieJar()).build();
+        private static final OkHttpClient CLIENT = new OkHttpClient.Builder().cookieJar(new MyCookieJar()).connectTimeout(6, TimeUnit.SECONDS)
+                .readTimeout(6,TimeUnit.SECONDS).writeTimeout(6,TimeUnit.SECONDS).build();
     }
 }
