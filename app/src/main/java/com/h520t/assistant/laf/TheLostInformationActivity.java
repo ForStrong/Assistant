@@ -42,7 +42,7 @@ public class TheLostInformationActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_the_lost_information);
+        setContentView(R.layout.activity_the_lost_information);
         initView();
 
     }
@@ -87,7 +87,7 @@ public class TheLostInformationActivity extends AppCompatActivity {
                     String place = lostPlace.getText().toString();
                     if (TextUtils.isEmpty(goods)||TextUtils.isEmpty(place)) {
                         Toast.makeText(this, "请填写完整信息", Toast.LENGTH_SHORT).show();
-                    }else if ((phone.getText().toString()).length()>0&&!(isMobileNO(phone.getText().toString()))){
+                    }else if ((phone.getText().toString()).length()>0&&!(isPhone(phone.getText().toString()))){
                         Toast.makeText(this, "请填写正确的手机号", Toast.LENGTH_SHORT).show();
                         phone.setText("");
                     }else{
@@ -132,10 +132,16 @@ public class TheLostInformationActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_toolbar,menu);
         return true;
     }
-    public boolean isMobileNO(String mobiles) {
-        Pattern p = Pattern.compile("^((13[0-9])|(15[^4,\\D])|(18[0-9]))\\d{8}$");
-        Matcher m = p.matcher(mobiles);
-        return m.matches();
+    public static boolean isPhone(String phone) {
+        String regex = "^((13[0-9])|(14[5,7,9])|(15([0-3]|[5-9]))|(166)|(17[0,1,3,5,6,7,8])|(18[0-9])|(19[8|9]))\\d{8}$";
+        if (phone.length() != 11) {
+            return false;
+        } else {
+            Pattern p = Pattern.compile(regex);
+            Matcher m = p.matcher(phone);
+            return m.matches();
+        }
     }
+
 
 }

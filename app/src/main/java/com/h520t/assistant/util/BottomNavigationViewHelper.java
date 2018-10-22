@@ -8,13 +8,6 @@ import android.util.Log;
 
 import java.lang.reflect.Field;
 
-/**
- * @author Administrator
- * @des ${TODO}
- * @Version $Rev$
- * @updateAuthor $Author$
- * @updateDes ${TODO}
- */
 
 public class BottomNavigationViewHelper {
     @SuppressLint("RestrictedApi")

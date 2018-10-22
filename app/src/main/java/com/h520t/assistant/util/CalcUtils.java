@@ -2,6 +2,7 @@ package com.h520t.assistant.util;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Objects;
 
 /**
  *
@@ -10,84 +11,41 @@ import java.math.RoundingMode;
  */
 public class CalcUtils {
 
-    public static final int TYPE_ADD = 0x00; // 加法
-    public static final int TYPE_MULTIPLY = 0x01; // 乘法
-    public static final int TYPE_DIVIDE = 0x02; // 除法
-    public static final int TYPE_SUBTRACT = 0x03; // 减法
-    /**
-     *  加法
-     * @param a
-     * @param b
-     * @return
-     */
+    private static final int TYPE_ADD = 0x00; // 加法
+    private static final int TYPE_MULTIPLY = 0x01; // 乘法
+    private static final int TYPE_DIVIDE = 0x02; // 除法
+    private static final int TYPE_SUBTRACT = 0x03; // 减法
+
     public static Double add(Double a, Double b) {
         return calc(a, b, -1, TYPE_ADD, null);
     }
-    /**
-     * 减法
-     * @param a
-     * @param b
-     * @return
-     */
+
 
     public static Double sub(Double a, Double b) {
         return calc(a, b, -1, TYPE_SUBTRACT, null);
     }
-    /**
-     * 乘法
-     * @param a
-     * @param b
-     * @return
-     */
+
 
     public static Double multiply(Double a, Double b) {
         return calc(a, b, -1, TYPE_MULTIPLY, null);
     }
 
-    /**
-     * 除法
-     * @param a
-     * @param b
-     * @return
-     */
 
     public static Double divide(Double a, Double b) {
         return calc(a, b, -1, TYPE_DIVIDE, null);
     }
 
-    /**
-     * 乘法
-     * @param a
-     * @param b
-     * @param scale 小数点后保留的位数
-     * @param mode 保留的模式
-     * @return
-     */
+
     public static Double multiply(Double a, Double b, int scale, RoundingMode mode) {
 
         return calc(a, b, scale, TYPE_MULTIPLY, mode);
     }
-    /**
-     * 除法
-     * @param a
-     * @param b
-     * @param scale 小数点后保留的位数
-     * @param mode 保留的模式
-     * @return
-     */
+
     public static Double divide(Double a, Double b, int scale, RoundingMode mode) {
 
         return calc(a, b, scale, TYPE_DIVIDE, mode);
     }
-    /**
-     *  计算
-     * @param a
-     * @param b
-     * @param scale
-     * @param type
-     * @param mode
-     * @return
-     */
+
     private static Double calc(Double a, Double b, int scale, int type, RoundingMode mode) {
         BigDecimal result = null;
 
@@ -115,15 +73,14 @@ public class CalcUtils {
         }
         if (mode==null) {
             if(scale!=-1){
-
-                result = result.setScale(scale);
+                result = Objects.requireNonNull(result).setScale(scale);
             }
         }else{
             if(scale!=-1){
-                result = result.setScale(scale,mode);
+                result = Objects.requireNonNull(result).setScale(scale,mode);
             }
         }
-        return result.doubleValue();
+        return Objects.requireNonNull(result).doubleValue();
     }
 
 }

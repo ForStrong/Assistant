@@ -83,15 +83,11 @@ public class LAFAdapter extends RecyclerView.Adapter<LAFAdapter.ViewHolder> {
                             object.deleteInBackground();
                             mAVObjects.remove(position);
                             notifyDataSetChanged();
-                            Toast.makeText(mContext, "delete", Toast.LENGTH_SHORT).show();
                             break;
                         case R.id.alter:
                             Intent intent = new Intent(mActivity,TheLostInformationActivity.class);
                             intent.putExtra(TheLostInformationActivity.AV_OBJECT,object);
                             mActivity.startActivity(intent);
-               /*             mAVObjects.remove(position);
-                            notifyDataSetChanged();*/
-                            Toast.makeText(mContext, "alter", Toast.LENGTH_SHORT).show();
                             break;
                         default:
                             break;
