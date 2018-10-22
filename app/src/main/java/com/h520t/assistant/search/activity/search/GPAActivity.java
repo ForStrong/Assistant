@@ -1,15 +1,19 @@
 package com.h520t.assistant.search.activity.search;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -37,7 +41,10 @@ public class GPAActivity extends AppCompatActivity {
     private Toolbar mToolbar;
     private LoginUtils mLoginUtils;
     private ProgressDialog mDialog;
+    private CheckBox rememberPass;
 
+    private SharedPreferences mPreferences;
+    private SharedPreferences.Editor mEditor;
     IGPACallBack mGPACallBack = new IGPACallBack() {
         @Override
         public void failedSemester() {
@@ -64,10 +71,8 @@ public class GPAActivity extends AppCompatActivity {
         public void failedGet() {
             runOnUiThread(() -> {
                 mBtn_login.setText("查询绩点");
-                if (mDialog.isShowing()) {
-                    mDialog.dismiss();
-                }
-                Toast.makeText(GPAActivity.this, "登陆教务网需要内网登陆", Toast.LENGTH_SHORT).show();
+                Toast.makeText(GPAActivity.this, "检查网络状态,教务网登陆可能需要内网", Toast.LENGTH_SHORT).show();
+
             });
         }
 
@@ -124,6 +129,17 @@ public class GPAActivity extends AppCompatActivity {
 
         @Override
         public void successLogin(String xm) {
+            runOnUiThread(()->{
+                mEditor = mPreferences.edit();
+                if (rememberPass.isChecked()){
+                    mEditor.putBoolean("remember_password",true);
+                    mEditor.putString("account",studentID);
+                    mEditor.putString("password",password);
+                }else {
+                    mEditor.clear();
+                }
+                mEditor.apply();
+            });
             GPAUtils gpaUtils = new GPAUtils(studentID,mGPACallBack,year,semester);
             gpaUtils.loginGPA(xm);
         }
@@ -143,10 +159,20 @@ public class GPAActivity extends AppCompatActivity {
         mPasswordEt = findViewById(R.id.gpa_password);
         mVerifyEt = findViewById(R.id.gpa_security_code);
         mToolbar = findViewById(R.id.gpa_search_toolbar);
-
+        rememberPass = findViewById(R.id.gpa_remember_password);
         mLoginUtils = new LoginUtils();
         mLoginUtils.setLoginCallBack(mLoginCallBack);
         mLoginUtils.getCookie();
+
+        mPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean isRemember = mPreferences.getBoolean("remember_password",false);
+        if (isRemember){
+            String account = mPreferences.getString("account","");
+            String password = mPreferences.getString("password","");
+            mStudentIDEt.setText(account);
+            mPasswordEt.setText(password);
+            rememberPass.setChecked(true);
+        }
 
         initViewClick();
     }
@@ -182,7 +208,9 @@ public class GPAActivity extends AppCompatActivity {
             Button loginBt = view.findViewById(R.id.gpa_login_bt);
             loginBt.setText("查询中...");
             mDialog = new ProgressDialog(this);
-            mDialog.setTitle("正在查询");
+            mDialog.setTitle("提示");
+            mDialog.setMessage("正在查询");
+            mDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "取消", (dialogInterface, i) ->finish());
             mDialog.show();
 
             studentID = mStudentIDEt.getText().toString();
@@ -200,15 +228,13 @@ public class GPAActivity extends AppCompatActivity {
         super.onStop();
         mLoginUtils.getCookie();
         mVerifyEt.setText("");
-        mDialog.cancel();
+        if (mDialog!=null&&mDialog.isShowing()) {
+            mDialog.cancel();
+        }
     }
 
     @Override
     public void onBackPressed() {
-        if (mDialog.isShowing()) {
-            mDialog.cancel();
-        }else {
-            super.onBackPressed();
-        }
+        super.onBackPressed();
     }
 }

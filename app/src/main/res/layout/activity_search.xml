@@ -62,7 +62,6 @@
         android:layout_height="56dp">
         <android.support.design.widget.TextInputEditText
             android:id="@+id/studentID"
-            android:text="202160211"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:inputType="number"
@@ -82,11 +81,18 @@
             android:id="@+id/password"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="hhht03279335"
             android:inputType="textPassword"
             android:hint="@string/studentPassword"/>
 
     </android.support.design.widget.TextInputLayout>
+
+    <CheckBox
+        android:id="@+id/remember_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:paddingStart="5dp"
+        android:text="记住密码" />
 
     <LinearLayout
         android:layout_marginTop="5dp"
@@ -116,7 +122,6 @@
                 android:layout_height="30dp"
                 android:layout_marginEnd="5dp"
                 android:layout_gravity="center"
-                android:src="@drawable/news"
                 />
         </LinearLayout>
 

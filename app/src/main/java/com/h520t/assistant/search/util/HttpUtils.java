@@ -62,7 +62,7 @@ public class HttpUtils {
     
     
     private static class  HttpUtilsHolder {
-        private static final OkHttpClient CLIENT = new OkHttpClient.Builder().cookieJar(new MyCookieJar()).connectTimeout(6, TimeUnit.SECONDS)
+        private static final OkHttpClient CLIENT = new OkHttpClient.Builder().cookieJar(new MyCookieJar()).connectTimeout(3, TimeUnit.SECONDS)
                 .readTimeout(6,TimeUnit.SECONDS).writeTimeout(6,TimeUnit.SECONDS).build();
     }
 }

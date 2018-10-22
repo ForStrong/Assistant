@@ -64,6 +64,11 @@ public class LAFAdapter extends RecyclerView.Adapter<LAFAdapter.ViewHolder> {
         AVFile avFile = (AVFile) avObject.get("lostImg");
         String url = avFile.getUrl();
         Glide.with(mContext).load(url).into(holder.lafGoodImg);
+        holder.lafGoodImg.setOnClickListener(view -> {
+            Intent intent = new Intent(mActivity,ImageActivity.class);
+            intent.putExtra(ImageActivity.sImageUrl,url);
+            mActivity.startActivity(intent);
+        });
         if (Build.SERIAL.equals(deviceID)) {
             holder.lafMenu.setVisibility(View.VISIBLE);
             holder.lafMenu.setOnClickListener(view -> {
@@ -99,12 +104,15 @@ public class LAFAdapter extends RecyclerView.Adapter<LAFAdapter.ViewHolder> {
             holder.lafMenu.setVisibility(View.INVISIBLE);
         }
         if (phoneNumber.length()>0) {
+            holder.lafPhone.setVisibility(View.VISIBLE);
             holder.lafPhone.setOnClickListener(view -> {
                 Intent intent=new Intent();
                 intent.setAction(Intent.ACTION_DIAL);   //android.intent.action.DIAL
                 intent.setData(Uri.parse("tel:"+phoneNumber));
                 mActivity.startActivity(intent);
             });
+        }else {
+            holder.lafPhone.setVisibility(View.GONE);
         }
 
     }

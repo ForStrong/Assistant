@@ -17,7 +17,7 @@
             android:layout_marginStart="10dp"
             android:layout_toEndOf="@+id/laf_good_img"
             android:drawableStart="@drawable/lost_goods"
-            android:textSize="20sp" />
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/laf_good_place"
@@ -28,7 +28,7 @@
             android:layout_marginStart="10dp"
             android:layout_toEndOf="@+id/laf_good_img"
             android:drawableStart="@drawable/laf_place"
-            android:textSize="20sp" />
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/laf_phone"

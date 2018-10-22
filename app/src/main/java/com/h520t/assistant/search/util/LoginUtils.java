@@ -65,8 +65,6 @@ public class LoginUtils {
                         Bitmap resizeBitmap = changeBitmapSize(bitmap);
                         mLoginCallBack.setVerifyImg(resizeBitmap);
                     }
-                }else {
-                    mLoginCallBack.failedGet();
                 }
             }
         };
@@ -77,10 +75,7 @@ public class LoginUtils {
         if (!(TextUtils.isEmpty(mVerifyCode)||TextUtils.isEmpty(mStudentID)||TextUtils.isEmpty(mPassword))) {
             Callback callback = new Callback() {
                 @Override
-                public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                    mLoginCallBack.failedGet();
-                }
-
+                public void onFailure(@NonNull Call call, @NonNull IOException e) { }
                 @Override
                 public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                     String name = "";
@@ -122,6 +117,7 @@ public class LoginUtils {
             mLoginCallBack.failedMessage();
         }
     }
+
     private boolean isSuccessLogin(Document parse) {
         Elements scripts = parse.getElementsByTag("script");
         for (Element script : scripts ) {
@@ -146,8 +142,8 @@ public class LoginUtils {
         Callback callback = new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                mLoginCallBack.failedGet();
             }
+
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) {
