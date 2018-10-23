@@ -47,7 +47,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:dropDownWidth="56dp"
-            android:prompt="@string/data_select"
+            android:prompt="@string/semester_select"
             android:spinnerMode="dialog"
             android:entries="@array/semester_select"
             />

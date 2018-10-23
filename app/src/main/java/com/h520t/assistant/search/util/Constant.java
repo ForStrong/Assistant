@@ -1,7 +1,5 @@
 package com.h520t.assistant.search.util;
 
-import android.graphics.Bitmap;
-
 import com.h520t.assistant.search.bean.GPABean;
 import com.h520t.assistant.search.bean.ScoreBean;
 

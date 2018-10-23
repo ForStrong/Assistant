@@ -72,30 +72,30 @@ public class LoginUtils {
     }
 
     public void loginPost(){
-        if (!(TextUtils.isEmpty(mVerifyCode)||TextUtils.isEmpty(mStudentID)||TextUtils.isEmpty(mPassword))) {
+        if (!(TextUtils.isEmpty(mVerifyCode) || TextUtils.isEmpty(mStudentID) || TextUtils.isEmpty(mPassword))) {
             Callback callback = new Callback() {
                 @Override
-                public void onFailure(@NonNull Call call, @NonNull IOException e) { }
+                public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                }
+
                 @Override
                 public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                     String name = "";
-                    if (response.isSuccessful()) {
-                        Log.i(TAG, "onResponse: "+response.isSuccessful());
-                        String html = Objects.requireNonNull(response.body()).string();
-                        Document parse = Jsoup.parse(html);
-                        if (!isSuccessLogin(parse))
-                            return;
-                        //获取名字
-                        Elements info = parse.getElementsByClass("info");
-                        if (info.size()>0) {
-                            Element li = info.get(0);
-                            Elements select = li.select("span[id=xhxm]");
-                            String text = select.text();
-                            name = text.substring(0, text.length() - 2);
-                        }else{
-                            mLoginCallBack.failedVerifyCode();
-                            return;
-                        }
+                    Log.i(TAG, "onResponse: " + response.isSuccessful());
+                    String html = Objects.requireNonNull(response.body()).string();
+                    Document parse = Jsoup.parse(html);
+                    if (!isSuccessLogin(parse))
+                        return;
+                    //获取名字
+                    Elements info = parse.getElementsByClass("info");
+                    if (info.size() > 0) {
+                        Element li = info.get(0);
+                        Elements select = li.select("span[id=xhxm]");
+                        String text = select.text();
+                        name = text.substring(0, text.length() - 2);
+                    } else {
+                        mLoginCallBack.failedPassword();
+                        return;
                     }
                     loginGet(name);
                 }

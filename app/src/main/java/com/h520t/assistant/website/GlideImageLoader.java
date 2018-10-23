@@ -6,13 +6,6 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.youth.banner.loader.ImageLoader;
 
-/**
- * @author Administrator
- * @des ${TODO}
- * @Version $Rev$
- * @updateAuthor $Author$
- * @updateDes ${TODO}
- */
 public class GlideImageLoader extends ImageLoader {
     @Override
     public void displayImage(Context context, Object path, ImageView imageView) {

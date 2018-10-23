@@ -73,6 +73,7 @@ public class GPAActivity extends AppCompatActivity {
                 mBtn_login.setText("查询绩点");
                 Toast.makeText(GPAActivity.this, "检查网络状态,教务网登陆可能需要内网", Toast.LENGTH_SHORT).show();
 
+
             });
         }
 
