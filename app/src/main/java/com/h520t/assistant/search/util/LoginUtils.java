@@ -23,6 +23,8 @@ import java.util.Objects;
 
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import okhttp3.Response;
 
 public class LoginUtils {
@@ -72,6 +74,26 @@ public class LoginUtils {
     }
 
     public void loginPost(){
+        OkHttpClient mCookieClient = new OkHttpClient().newBuilder().build();
+        Request.Builder builder = new Request.Builder();
+        builder.url(Constant.URL);
+        Request request1 = builder.build();
+        mCookieClient.newCall(request1).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+            }
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String html = Objects.requireNonNull(response.body()).string();
+                Log.i(TAG, "onResponse: "+html);
+                String val = Jsoup.parse(html).select("input[name=__VIEWSTATE]").val();
+                Log.i(TAG, "onResponse: "+val);
+                aaa(val);
+            }
+        });
+    }
+
+    private void aaa(String val) {
         if (!(TextUtils.isEmpty(mVerifyCode) || TextUtils.isEmpty(mStudentID) || TextUtils.isEmpty(mPassword))) {
             Callback callback = new Callback() {
                 @Override
@@ -80,9 +102,10 @@ public class LoginUtils {
 
                 @Override
                 public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                    String name = "";
+                    String name;
                     Log.i(TAG, "onResponse: " + response.isSuccessful());
                     String html = Objects.requireNonNull(response.body()).string();
+                    Log.i(TAG, "onResponse: html"+html);
                     Document parse = Jsoup.parse(html);
                     if (!isSuccessLogin(parse))
                         return;
@@ -93,16 +116,17 @@ public class LoginUtils {
                         Elements select = li.select("span[id=xhxm]");
                         String text = select.text();
                         name = text.substring(0, text.length() - 2);
-                    } else {
-                        mLoginCallBack.failedPassword();
+                    }else {
+                        mLoginCallBack.failedVerifyCode();
                         return;
                     }
                     loginGet(name);
                 }
             };
+
             Map<String,String> params = new HashMap<>();
-            params.put("ASP.NET_SessionId",Constant.sCookie);
-            params.put("__VIEWSTATE", Constant.LOGIN_VIEWSTATE);
+            params.put("ASP.NET_SessionId", Constant.sCookie);
+            params.put("__VIEWSTATE", val);
             params.put("txtUserName", mStudentID);
             params.put("Textbox1","");
             params.put("TextBox2",mPassword);

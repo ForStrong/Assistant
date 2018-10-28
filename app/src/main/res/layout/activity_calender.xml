@@ -33,10 +33,10 @@
             android:textSize="22sp"/>
 
         <TextView
+            android:id="@+id/date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="2018-10-16 南工程助手"
             android:gravity="start"
             android:layout_marginStart="40dp"
             android:textSize="16sp"/>

@@ -137,7 +137,6 @@ public class LAFFragment extends Fragment {
             public void done(List<AVObject> list, AVException e) {
                 if (list.size() == 0) {
                     isNoMore = true;
-                    return;
                 }else {
                     LiveDataBus.get().with("key").postValue(list);
                     isNoMore = false;
