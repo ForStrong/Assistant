@@ -17,9 +17,11 @@
 效果图：
 <div align="center">
 <img src="https://github.com/huangaa/Assistant/blob/master/images/grade.gif" width="30%" hight ="30%" alt="成绩查询:"/>
+</div>	
+<div align="center">
 <img src="https://github.com/huangaa/Assistant/blob/master/images/GPA.gif" width="30%" hight ="50%" alt="绩点查询:"/>
 </div>
-
-
+<div align="center">
 <img src="https://github.com/huangaa/Assistant/blob/master/images/TIM图片20181022203209.jpg" width="30%" hight ="30%" alt="常用网站:"/>
+</div>
 
