@@ -22,10 +22,14 @@
 </div>
 
 失物招领:
-<img src="https://github.com/huangaa/Assistant/blob/master/images/takePhoto.gif" width="30%" hight ="50%" alt="绩点查询"/>
+<div align="left">
+<img src="https://github.com/huangaa/Assistant/blob/master/images/takePhoto.gif" width="30%" hight ="50%" alt="失物招领"/>
+</div>
 
 常用网站:
 <div align="left">
 <img src="https://github.com/huangaa/Assistant/blob/master/images/TIM图片20181022203209.jpg" width="30%" hight ="30%" alt="常用网站"/>
 </div>
+
+还有些效果图就不展示了，在images文件夹中。
 
