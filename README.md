@@ -18,6 +18,6 @@
 
 ![成绩查询](https://github.com/huangaa/Assistant/tree/master/images/grade.gif)
 
-![绩点查询](https://github.com/huangaa/Assistant/tree/master/images/GPA.gif)
+![绩点查询](https://github.com/huangaa/Assistant/blob/master/images/GPA.gif)
 	
 ![常用网站](https://github.com/huangaa/Assistant/tree/master/images/TIM图片20181022203209.jpg)
