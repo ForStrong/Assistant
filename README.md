@@ -15,4 +15,6 @@
 	
 		
 效果图：
+
+![image](http://github.com/huangaa/Assistant/images/grade.gif)
 	
