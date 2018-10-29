@@ -16,5 +16,5 @@
 		
 效果图：
 
-![image](http://github.com/huangaa/Assistant/images/grade.gif)
+![image](https://github.com/huangaa/Assistant/tree/master/images/grade.gif)
 	
