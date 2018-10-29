@@ -49,9 +49,9 @@ public class GPAActivity extends AppCompatActivity {
         @Override
         public void failedSemester() {
             runOnUiThread(() -> {
+                mDialog.cancel();
                 mBtn_login.setText("查询绩点");
                 Toast.makeText(GPAActivity.this, "还无法查询该学期的成绩", Toast.LENGTH_SHORT).show();
-                Log.i(TAG, "failedSemester: "+Constant.sGPABeans);
                 mLoginUtils.getCookie();
                 mVerifyEt.setText("");
             });
@@ -70,10 +70,10 @@ public class GPAActivity extends AppCompatActivity {
         @Override
         public void failedGet() {
             runOnUiThread(() -> {
+                if (mDialog.isShowing())
+                    mDialog.cancel();
                 mBtn_login.setText("查询绩点");
                 Toast.makeText(GPAActivity.this, "检查网络状态,教务网登陆可能需要内网", Toast.LENGTH_SHORT).show();
-
-
             });
         }
 
@@ -89,8 +89,8 @@ public class GPAActivity extends AppCompatActivity {
         @Override
         public void failedStudentID() {
             runOnUiThread(() -> {
-                mBtn_login.setText("查询绩点");
                 mDialog.cancel();
+                mBtn_login.setText("查询绩点");
                 Toast.makeText(GPAActivity.this, "用户名不存在或未按照要求参加教学活动", Toast.LENGTH_SHORT).show();
                 mLoginUtils.getCookie();
                 mStudentIDEt.setText("");
@@ -100,8 +100,8 @@ public class GPAActivity extends AppCompatActivity {
         @Override
         public void failedPassword() {
             runOnUiThread(() -> {
-                mBtn_login.setText("查询绩点");
                 mDialog.cancel();
+                mBtn_login.setText("查询绩点");
                 Toast.makeText(GPAActivity.this, "密码错误", Toast.LENGTH_SHORT).show();
                 mLoginUtils.getCookie();
                 mPasswordEt.setText("");
@@ -111,8 +111,8 @@ public class GPAActivity extends AppCompatActivity {
         @Override
         public void failedVerifyCode() {
             runOnUiThread(() -> {
-                mBtn_login.setText("查询绩点");
                 mDialog.cancel();
+                mBtn_login.setText("查询绩点");
                 Toast.makeText(GPAActivity.this, "验证码错误", Toast.LENGTH_SHORT).show();
                 mLoginUtils.getCookie();
                 mVerifyEt.setText("");
@@ -121,8 +121,8 @@ public class GPAActivity extends AppCompatActivity {
         @Override
         public void failedMessage() {
             runOnUiThread(() -> {
-                mBtn_login.setText("查询绩点");
                 mDialog.cancel();
+                mBtn_login.setText("查询绩点");
                 Toast.makeText(GPAActivity.this, "填写完整信息", Toast.LENGTH_SHORT).show();
                 mLoginUtils.getCookie();
             });
