@@ -15,9 +15,14 @@
 	
 		
 效果图：
+成绩查询:
 
-![成绩查询](https://github.com/huangaa/Assistant/tree/master/images/grade.gif)
-
-![绩点查询](https://github.com/huangaa/Assistant/blob/master/images/GPA.gif)
+<img src="https://github.com/huangaa/Assistant/blob/master/images/grade.gif" width="30%" hight ="30%" alt=""/>
 	
-![常用网站](https://github.com/huangaa/Assistant/tree/master/images/TIM图片20181022203209.jpg)
+绩点查询:
+
+<img src="https://github.com/huangaa/Assistant/blob/master/images/GPA.gif" width="30%" hight ="30%" alt=""/>
+
+常用网站：
+
+<img src="https://github.com/huangaa/Assistant/blob/master/images/TIM图片20181022203209.jpg" width="30%" hight ="30%" alt=""/>
