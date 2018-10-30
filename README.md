@@ -31,5 +31,3 @@
 <img src="https://github.com/huangaa/Assistant/blob/master/images/TIM图片20181022203209.jpg" width="30%" hight ="30%" alt="常用网站"/>
 </div>
 
-还有些效果图就不展示了，在images文件夹中。
-
