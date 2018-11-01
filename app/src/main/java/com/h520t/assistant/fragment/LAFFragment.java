@@ -3,16 +3,13 @@ package com.h520t.assistant.fragment;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.content.ContentUris;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -57,6 +54,7 @@ public class LAFFragment extends Fragment {
     Uri imageUri;
     final int TAKE_PHOTO = 111;
     private final int GET_PHOTO = 222;
+    private final int WRITE_EXTERNAL_STORAGE = 333;
     private  Bitmap mBitmap;
     RecyclerView mRecyclerView;
     List<AVObject> mList ;
@@ -168,26 +166,19 @@ public class LAFFragment extends Fragment {
     }
 
 
-    public  void getPhotoByAlbum(){
-        if (ContextCompat.checkSelfPermission(Objects.requireNonNull(getActivity())
-                , Manifest.permission.WRITE_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED)
-            ActivityCompat.requestPermissions(getActivity()
-                    , new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, GET_PHOTO);
+    public void getPhotoByAlbum(){
+        if (ContextCompat.checkSelfPermission(Objects.requireNonNull(getActivity()),Manifest.permission.WRITE_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED)
+            requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},WRITE_EXTERNAL_STORAGE);
         else {
             openAlbum();
         }
     }
 
-    private void openAlbum() {
-        Intent intent = new Intent("android.intent.action.GET_CONTENT");
-        intent.setType("image/*");
-        startActivityForResult(intent,GET_PHOTO);
-    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {
-            case GET_PHOTO:
+            case WRITE_EXTERNAL_STORAGE:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
                     openAlbum();
                 }else {
@@ -198,6 +189,13 @@ public class LAFFragment extends Fragment {
             default:
                 break;
         }
+    }
+    private void openAlbum() {
+        Intent intentToPickPic = new Intent(Intent.ACTION_PICK, null);
+        // 如果限制上传到服务器的图片类型时可以直接写如："image/jpeg 、 image/png等的类型" 所有类型则写 "image/*"
+        intentToPickPic.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+        startActivityForResult(intentToPickPic, GET_PHOTO);
+
     }
 
     @Override
@@ -228,49 +226,20 @@ public class LAFFragment extends Fragment {
     }
 
     private void handleImage(Intent data) {
-        String imagePath = null;
-        Uri uri = data.getData();
-        if (DocumentsContract.isDocumentUri(getActivity(),uri)){
-            String docID = DocumentsContract.getDocumentId(uri);
-            assert uri != null;
-            if ("com.android.providers.media.documents".equals(uri.getAuthority())){
-                String id = docID.split(":")[1];
-                String selection = MediaStore.Images.Media._ID+"="+id;
-                imagePath =  getImagePath(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,selection);
-            }else if ("com.android.providers.downloads.documents".equals(uri.getAuthority())){
-                Uri contentUri = ContentUris.withAppendedId(
-                        Uri.parse("content://downloads/public_downloads"),Long.valueOf(docID));
-                imagePath = getImagePath(contentUri,null);
-            }else if ("content".equals(uri.getScheme())){
-                imagePath = getImagePath(uri,null);
-            }else if ("file".equals(uri.getScheme())){
-                imagePath = uri.getPath();
+        imageUri = data.getData();
+        if (imageUri != null) {
+            try {
+                mBitmap = BitmapFactory.decodeStream(Objects.requireNonNull(getActivity()).getContentResolver().openInputStream(imageUri));
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                mBitmap.compress(Bitmap.CompressFormat.JPEG,10,stream);
+                mBitmapBytes = stream.toByteArray();
+                Intent intent = new Intent(getActivity(),TheLostInformationActivity.class);
+                intent.putExtra(TheLostInformationActivity.BITMAP_BYTES,mBitmapBytes);
+                startActivity(intent);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
             }
         }
-        if (imagePath!=null) {
-            mBitmap = BitmapFactory.decodeFile(imagePath);
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            mBitmap.compress(Bitmap.CompressFormat.JPEG,10,stream);
-            mBitmapBytes = stream.toByteArray();
-            Intent intent = new Intent(getActivity(),TheLostInformationActivity.class);
-            intent.putExtra(TheLostInformationActivity.BITMAP_BYTES,mBitmapBytes);
-            startActivity(intent);
-        }else{
-            Toast.makeText(getActivity(), "failed to get image", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    private String getImagePath(Uri uri, String selection) {
-        String path = null;
-        @SuppressLint("Recycle")
-        Cursor cursor = Objects.requireNonNull(getActivity()).getContentResolver().query(uri,null,selection,null,null);
-        if (cursor!=null){
-            if (cursor.moveToFirst()){
-                path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
-            }
-            cursor.close();
-        }
-        return path;
     }
 
     @Override

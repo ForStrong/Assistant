@@ -30,10 +30,6 @@ public class SplashActivity extends AppCompatActivity {
         window.setStatusBarColor(android.R.color.white);
 
         ImageView splashIcon = findViewById(R.id.splash_icon);
-
-
-
-
         AlphaAnimation animation = new AlphaAnimation(0,1);
         animation.setDuration(2000);
         animation.setAnimationListener(new Animation.AnimationListener() {

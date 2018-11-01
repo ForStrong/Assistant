@@ -73,7 +73,7 @@ public class SearchActivity extends AppCompatActivity {
         @Override
         public void failedGet() {
             runOnUiThread(() -> {
-                if (mDialog.isShowing())
+                if (mDialog!=null&&mDialog.isShowing())
                     mDialog.cancel();
                 mBtn_login.setText("查询成绩");
                 Toast.makeText(SearchActivity.this, "检查网络状态,教务网登陆可能需要内网", Toast.LENGTH_SHORT).show();

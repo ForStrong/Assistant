@@ -2,13 +2,6 @@ package com.h520t.assistant.search.bean;
 
 import java.io.Serializable;
 
-/**
- * @author Administrator
- * @des ${TODO}
- * @Version $Rev$
- * @updateAuthor $Author$
- * @updateDes ${TODO}
- */
 public class ScoreBean implements Serializable{
     private String className;
     private String classNature;

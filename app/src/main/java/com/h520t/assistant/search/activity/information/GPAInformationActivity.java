@@ -35,8 +35,6 @@ public class GPAInformationActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String title = intent.getStringExtra(GPAInformationActivity.TOOLBAR_TITLE);
         toolbar.setTitle(title);
-
-
         //平均学分绩点计算
         Double creditCount = Double.valueOf("0");
         Double count = Double.valueOf("0");

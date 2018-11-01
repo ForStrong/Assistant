@@ -12,13 +12,6 @@ import com.h520t.assistant.R;
 
 import java.util.ArrayList;
 
-/**
- * @author Administrator
- * @des ${TODO}
- * @Version $Rev$
- * @updateAuthor $Author$
- * @updateDes ${TODO}
- */
 public class WebsiteAdapter extends RecyclerView.Adapter<WebsiteAdapter.ViewHolder> {
     private ArrayList<String> urls;
 

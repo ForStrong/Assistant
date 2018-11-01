@@ -1,12 +1,6 @@
 package com.h520t.assistant.search.bean;
 
-/**
- * @author Administrator
- * @des ${TODO}
- * @Version $Rev$
- * @updateAuthor $Author$
- * @updateDes ${TODO}
- */
+
 public class GPABean {
     private String className;
     private String classNature;

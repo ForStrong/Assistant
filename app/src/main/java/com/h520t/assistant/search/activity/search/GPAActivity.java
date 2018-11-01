@@ -18,7 +18,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
-
 import com.h520t.assistant.R;
 import com.h520t.assistant.search.activity.information.GPAInformationActivity;
 import com.h520t.assistant.search.call_back_impl.IGPACallBack;
@@ -70,7 +69,7 @@ public class GPAActivity extends AppCompatActivity {
         @Override
         public void failedGet() {
             runOnUiThread(() -> {
-                if (mDialog.isShowing())
+                if (mDialog!=null&&mDialog.isShowing())
                     mDialog.cancel();
                 mBtn_login.setText("查询绩点");
                 Toast.makeText(GPAActivity.this, "检查网络状态,教务网登陆可能需要内网", Toast.LENGTH_SHORT).show();

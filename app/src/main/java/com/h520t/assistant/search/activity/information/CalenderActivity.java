@@ -52,7 +52,6 @@ public class CalenderActivity extends AppCompatActivity {
             mWindow.setStatusBarColor(getResources().getColor(android.R.color.black));
             mPhotoView.setVisibility(View.VISIBLE);
             mPhotoView.animaFrom(mInfo);
-
         });
     }
 

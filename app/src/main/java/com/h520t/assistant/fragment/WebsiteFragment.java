@@ -45,11 +45,14 @@ public class WebsiteFragment extends Fragment {
             ,"https://baoxiu.njit.casbs.cn/Repair/"
             };
 
-    @SuppressLint("ValidFragment")
-    private WebsiteFragment() {
+    public WebsiteFragment() {
         // Required empty public constructor
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
