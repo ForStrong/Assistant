@@ -13,13 +13,16 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -32,6 +35,7 @@ import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.h520t.assistant.R;
 import com.h520t.assistant.laf.LAFAdapter;
+import com.h520t.assistant.laf.MyLAFActivity;
 import com.h520t.assistant.laf.TheLostInformationActivity;
 import com.jeremyliao.livedatabus.LiveDataBus;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -51,6 +55,7 @@ import static android.app.Activity.RESULT_OK;
 public class LAFFragment extends Fragment {
     FloatingActionMenu fabMenu;
     FloatingActionButton fabCamera,fabAlbum;
+    private Toolbar mToolbar;
     Uri imageUri;
     final int TAKE_PHOTO = 111;
     private final int GET_PHOTO = 222;
@@ -79,7 +84,13 @@ public class LAFFragment extends Fragment {
         mRefreshLayout = view.findViewById(R.id.refresh_layout);
         mRefreshLayout.setEnableAutoLoadMore(false);
         fabMenu = view.findViewById(R.id.fab_menu);
+        mToolbar = view.findViewById(R.id.toolbar);
         return view;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_laf,menu);
     }
 
     @Override
@@ -119,6 +130,20 @@ public class LAFFragment extends Fragment {
 
         fabCamera.setOnClickListener(view -> getPhotoByCamera());
         fabAlbum.setOnClickListener(view -> getPhotoByAlbum());
+        setHasOptionsMenu(true);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
+        mToolbar.setPopupTheme(R.style.LAFPopupMenu);
+        mToolbar.setOnMenuItemClickListener(menuItem -> {
+            switch (menuItem.getItemId()) {
+                case R.id.myLAF:
+                    Intent intent = new Intent(getActivity(), MyLAFActivity.class);
+                    startActivity(intent);
+                    break;
+                default:
+                    break;
+            }
+            return true;
+        });
     }
 
     public void getData(Boolean isRefresh) {
@@ -133,7 +158,7 @@ public class LAFFragment extends Fragment {
         avQuery.findInBackground(new FindCallback<AVObject>() {
             @Override
             public void done(List<AVObject> list, AVException e) {
-                if (list.size() == 0) {
+                if (list!=null&&list.size() == 0) {
                     isNoMore = true;
                 }else {
                     LiveDataBus.get().with("key").postValue(list);
@@ -165,7 +190,6 @@ public class LAFFragment extends Fragment {
         startActivityForResult(intent,TAKE_PHOTO);
     }
 
-
     public void getPhotoByAlbum(){
         if (ContextCompat.checkSelfPermission(Objects.requireNonNull(getActivity()),Manifest.permission.WRITE_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED)
             requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},WRITE_EXTERNAL_STORAGE);
@@ -173,7 +197,6 @@ public class LAFFragment extends Fragment {
             openAlbum();
         }
     }
-
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {

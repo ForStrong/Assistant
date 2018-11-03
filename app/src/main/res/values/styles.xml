@@ -27,5 +27,11 @@
         <item name="android:layout_marginStart">10dp</item>
     </style>
 
+    <style name="LAFPopupMenu" parent="ThemeOverlay.AppCompat.Light" >
+        <item name="android:colorBackground">@android:color/white</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="overlapAnchor">false</item>
+    </style>
+
 
 </resources>

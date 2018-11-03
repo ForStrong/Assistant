@@ -43,7 +43,8 @@
         <activity android:name=".search.activity.search.GPAActivity" />
         <activity android:name=".search.activity.information.GPAInformationActivity" />
         <activity android:name=".search.activity.information.CalenderActivity" />
-        <activity android:name=".laf.ImageActivity"></activity>
+        <activity android:name=".laf.ImageActivity" />
+        <activity android:name=".laf.MyLAFActivity"></activity>
     </application>
 
 </manifest>

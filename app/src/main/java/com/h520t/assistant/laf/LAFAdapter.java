@@ -115,7 +115,6 @@ public class LAFAdapter extends RecyclerView.Adapter<LAFAdapter.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        Log.i(TAG, "getItemCount: "+mAVObjects.size());
         return mAVObjects==null?0:mAVObjects.size();
     }
 
