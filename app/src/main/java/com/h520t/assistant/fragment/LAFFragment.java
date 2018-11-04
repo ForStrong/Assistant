@@ -25,6 +25,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.avos.avoscloud.AVException;
@@ -37,6 +38,7 @@ import com.h520t.assistant.R;
 import com.h520t.assistant.laf.LAFAdapter;
 import com.h520t.assistant.laf.MyLAFActivity;
 import com.h520t.assistant.laf.TheLostInformationActivity;
+import com.h520t.assistant.util.RecyclerViewDivider;
 import com.jeremyliao.livedatabus.LiveDataBus;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
@@ -105,7 +107,7 @@ public class LAFFragment extends Fragment {
             if (mAdapter==null||mIsRefresh) {
                 mAdapter = new LAFAdapter(mList, getActivity());
                 mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-                //            mRecyclerView.addItemDecoration(new RecyclerViewDivider(getActivity(), LinearLayout.VERTICAL));
+                mRecyclerView.addItemDecoration(new RecyclerViewDivider(getActivity(), LinearLayout.VERTICAL));
                 mRecyclerView.setAdapter(mAdapter);
                 mAdapter.notifyDataSetChanged();
             }else {
@@ -225,18 +227,19 @@ public class LAFFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
             case TAKE_PHOTO:
-                if (resultCode == RESULT_OK)
+                if (resultCode == RESULT_OK) {
                     try {
                         mBitmap = BitmapFactory.decodeStream(Objects.requireNonNull(getActivity()).getContentResolver().openInputStream(imageUri));
-                        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                        mBitmap.compress(Bitmap.CompressFormat.JPEG, 10, baos);
-                        mBitmapBytes = baos.toByteArray();
-                        Intent intent = new Intent(getActivity(),TheLostInformationActivity.class);
-                        intent.putExtra(TheLostInformationActivity.BITMAP_BYTES,mBitmapBytes);
-                        startActivity(intent);
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
                     }
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    mBitmap.compress(Bitmap.CompressFormat.JPEG, 20, baos);
+                    mBitmapBytes = baos.toByteArray();
+                    Intent intent = new Intent(getActivity(), TheLostInformationActivity.class);
+                    intent.putExtra(TheLostInformationActivity.BITMAP_BYTES, mBitmapBytes);
+                    startActivity(intent);
+                }
                 break;
             case GET_PHOTO:
                 if (resultCode==RESULT_OK){
@@ -254,7 +257,7 @@ public class LAFFragment extends Fragment {
             try {
                 mBitmap = BitmapFactory.decodeStream(Objects.requireNonNull(getActivity()).getContentResolver().openInputStream(imageUri));
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                mBitmap.compress(Bitmap.CompressFormat.JPEG,10,stream);
+                mBitmap.compress(Bitmap.CompressFormat.JPEG,20,stream);
                 mBitmapBytes = stream.toByteArray();
                 Intent intent = new Intent(getActivity(),TheLostInformationActivity.class);
                 intent.putExtra(TheLostInformationActivity.BITMAP_BYTES,mBitmapBytes);

@@ -60,7 +60,6 @@ public class TheLostInformationActivity extends AppCompatActivity {
             lostImg.setImageBitmap(bitmap);
         }
 
-
         mObject = intent.getParcelableExtra(TheLostInformationActivity.AV_OBJECT);
         if (mObject!=null){
             lostGoods.setText((String)mObject.get("lostGoods"));

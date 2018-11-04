@@ -6,12 +6,14 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.widget.LinearLayout;
 
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.AVQuery;
 import com.avos.avoscloud.FindCallback;
 import com.h520t.assistant.R;
+import com.h520t.assistant.util.RecyclerViewDivider;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +26,7 @@ public class MyLAFActivity extends AppCompatActivity {
         setContentView(R.layout.activity_my_laf);
         RecyclerView recyclerView = findViewById(R.id.my_laf_rv);
         recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
+        recyclerView.addItemDecoration(new RecyclerViewDivider(this, LinearLayout.VERTICAL));
         AVQuery<AVObject> avQuery = new AVQuery<>("lostProperty");
         avQuery.addDescendingOrder("data");
         avQuery.whereContains("deviceID", Build.SERIAL);
