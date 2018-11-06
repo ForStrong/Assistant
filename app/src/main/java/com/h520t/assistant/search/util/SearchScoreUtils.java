@@ -1,6 +1,7 @@
 package com.h520t.assistant.search.util;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.h520t.assistant.search.bean.ScoreBean;
 import com.h520t.assistant.search.call_back_impl.IScoreCallback;
@@ -25,6 +26,7 @@ public class SearchScoreUtils {
     private String mStudentID;
     private IScoreCallback mScoreCallBack;
     private String mYear,mSemester;
+    private static final String TAG = "SearchScoreUtils";
 
     public SearchScoreUtils(String studentID, IScoreCallback scoreCallBack, String year, String semester) {
         mStudentID = studentID;
@@ -79,6 +81,7 @@ public class SearchScoreUtils {
                     Constant.sScoreBeans.add(new ScoreBean(strings.get(3),strings.get(4),strings.get(6),strings.get(7)
                             ,strings.get(8),strings.get(9),strings.get(10),strings.get(11)));
                 }
+                Log.i(TAG, "onResponse: "+Constant.sScoreBeans.toString()+"size is :  "+Constant.sScoreBeans.size());
                 if (!(Constant.sScoreBeans.size()>0)){
                     mScoreCallBack.failedSemester();
                 }else{

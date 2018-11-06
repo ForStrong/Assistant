@@ -85,9 +85,9 @@ public class LoginUtils {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String html = Objects.requireNonNull(response.body()).string();
-                Log.i(TAG, "onResponse: "+html);
+//                Log.i(TAG, "onResponse: "+html);
                 String val = Jsoup.parse(html).select("input[name=__VIEWSTATE]").val();
-                Log.i(TAG, "onResponse: "+val);
+//                Log.i(TAG, "onResponse: "+val);
                 aaa(val);
             }
         });
@@ -103,9 +103,8 @@ public class LoginUtils {
                 @Override
                 public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                     String name;
-                    Log.i(TAG, "onResponse: " + response.isSuccessful());
                     String html = Objects.requireNonNull(response.body()).string();
-                    Log.i(TAG, "onResponse: html"+html);
+//                    Log.i(TAG, "onResponse: html"+html);
                     Document parse = Jsoup.parse(html);
                     if (!isSuccessLogin(parse))
                         return;

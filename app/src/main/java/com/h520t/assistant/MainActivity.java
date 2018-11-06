@@ -7,10 +7,12 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
+import com.avos.avoscloud.AVOSCloud;
 import com.h520t.assistant.fragment.LAFFragment;
 import com.h520t.assistant.fragment.SearchFragment;
 import com.h520t.assistant.fragment.WebsiteFragment;
 import com.h520t.assistant.util.BottomNavigationViewHelper;
+import com.scwang.smartrefresh.header.WaterDropHeader;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
@@ -19,8 +21,8 @@ public class MainActivity extends AppCompatActivity {
     static {
         //设置全局的Header构建器
         SmartRefreshLayout.setDefaultRefreshHeaderCreator((context, layout) -> {
-            layout.setPrimaryColorsId(R.color.colorPrimary, android.R.color.white);//全局设置主题颜色
-            return new ClassicsHeader(context);//.setTimeFormat(new DynamicTimeFormat("更新于 %s"));//指定为经典Header，默认是 贝塞尔雷达Header
+            layout.setPrimaryColorsId(R.color.colorPrimary);//全局设置主题颜色
+            return new WaterDropHeader(context);//.setTimeFormat(new DynamicTimeFormat("更新于 %s"));//指定为经典Header，默认是 贝塞尔雷达Header
         });
         //设置全局的Footer构建器
         SmartRefreshLayout.setDefaultRefreshFooterCreator((context, layout) -> {
@@ -35,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initView();
+        AVOSCloud.initialize(this,"wRDwDSiBV3gO2WSIYnaVXftd-gzGzoHsz","wRup1G9M0qiTHb7i9IApveJE");
     }
 
     private void initView() {

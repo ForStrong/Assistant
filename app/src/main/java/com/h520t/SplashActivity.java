@@ -49,7 +49,6 @@ public class SplashActivity extends AppCompatActivity {
             }
         });
         splashIcon.setAnimation(animation);
-        AVOSCloud.initialize(this,"wRDwDSiBV3gO2WSIYnaVXftd-gzGzoHsz","wRup1G9M0qiTHb7i9IApveJE");
     }
 
     private void skip() {

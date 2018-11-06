@@ -7,19 +7,26 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.h520t.assistant.R;
 import com.h520t.assistant.search.bean.GPABean;
+import com.h520t.assistant.search.util.Constant;
+import com.h520t.assistant.util.CalcUtils;
+import com.jeremyliao.livedatabus.LiveDataBus;
 
+import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 
 public class GPAAdapter extends RecyclerView.Adapter<GPAAdapter.ViewHolder> {
     private ArrayList<GPABean> mGPABeans;
     private Context mContext;
-
+    private HashMap<Integer,Boolean> map = new HashMap<>();
     public GPAAdapter(ArrayList<GPABean> GPABeans) {
         mGPABeans = GPABeans;
     }
@@ -70,7 +77,23 @@ public class GPAAdapter extends RecyclerView.Adapter<GPAAdapter.ViewHolder> {
             holder.retakenGradeLayout.setVisibility(View.VISIBLE);
             holder.retakenGrade.setText(gpaBean.getRetakenGrade());
         }
+        //================================================判断是否选中==============================//
+        holder.isChoice.setOnCheckedChangeListener((compoundButton, b) -> {
+            gpaBean.setChoice(holder.isChoice.isChecked());
+            LiveDataBus.get().with("changeChoice").setValue(true);
+            if (!b){
+                map.put(position,false);
+            }else {
+                map.remove(position);
+            }
+        });
+        if (map!=null&&map.containsKey(position)){
+            holder.isChoice.setChecked(false);
+        }else {
+            holder.isChoice.setChecked(true);
+        }
     }
+
 
     @Override
     public int getItemCount() {
@@ -80,6 +103,7 @@ public class GPAAdapter extends RecyclerView.Adapter<GPAAdapter.ViewHolder> {
     static class ViewHolder extends RecyclerView.ViewHolder{
         TextView className,classNature,credit,grade,gpa,makeupGrade,retakenGrade;
         LinearLayout makeupGradeLayout,retakenGradeLayout;
+        CheckBox isChoice;
          ViewHolder(View itemView) {
             super(itemView);
             className = itemView.findViewById(R.id.gpa_className);
@@ -89,6 +113,7 @@ public class GPAAdapter extends RecyclerView.Adapter<GPAAdapter.ViewHolder> {
             gpa = itemView.findViewById(R.id.gpa_gpa);
             makeupGrade = itemView.findViewById(R.id.gpa_makeupGrade);
             retakenGrade = itemView.findViewById(R.id.gpa_retakenGrade);
+            isChoice = itemView.findViewById(R.id.isChoice);
 
             makeupGradeLayout = itemView.findViewById(R.id.gpa_makeupGradeLayout);
             retakenGradeLayout = itemView.findViewById(R.id.gpa_retakenGradeLayout);

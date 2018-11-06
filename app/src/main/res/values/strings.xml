@@ -45,4 +45,6 @@
     <string name="laf_menu_alter">修改</string>
     <string name="laf_menu_delete">删除</string>
     <string name="verifyCode">验证码</string>
+
+    <string name="calculate_gpa">平均学分绩点</string>
 </resources>

@@ -9,6 +9,7 @@ public class GPABean {
     private String grade;
     private String makeupGrade;
     private String retakenGrade;
+    private boolean isChoice = true;
 
     public GPABean(String className, String classNature, String credit, String gpa, String grade, String makeupGrade, String retakenGrade) {
         this.className = className;
@@ -31,6 +32,14 @@ public class GPABean {
                 ", makeupGrade='" + makeupGrade + '\'' +
                 ", retakenGrade='" + retakenGrade + '\'' +
                 '}';
+    }
+
+    public boolean isChoice() {
+        return isChoice;
+    }
+
+    public void setChoice(boolean choice) {
+        isChoice = choice;
     }
 
     public String getClassName() {

@@ -2,6 +2,7 @@ package com.h520t.assistant.search.util;
 
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.h520t.assistant.search.bean.GPABean;
 import com.h520t.assistant.search.call_back_impl.IGPACallBack;
@@ -26,7 +27,7 @@ public class GPAUtils {
     private String mStudentID;
     private IGPACallBack mGPACallBack;
     private String mYear,mSemester;
-
+    private static final String TAG = "GPAUtils";
     public GPAUtils(String studentID, IGPACallBack GPACallBack, String year, String semester) {
         mYear = year;
         mSemester = semester;
@@ -79,6 +80,7 @@ public class GPAUtils {
                     Constant.sGPABeans.add(new GPABean(strings.get(3),strings.get(4),strings.get(6),strings.get(7)
                             ,strings.get(8),strings.get(10),strings.get(11)));
                 }
+                Log.i(TAG, "onResponse: "+Constant.sGPABeans.toString()+"size is :  "+Constant.sGPABeans.size());
                 if (!(Constant.sGPABeans.size()>0)){
                     mGPACallBack.failedSemester();
                 }else{
