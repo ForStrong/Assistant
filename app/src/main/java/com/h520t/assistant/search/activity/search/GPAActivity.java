@@ -235,6 +235,9 @@ public class GPAActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        if (mDialog!=null&&mDialog.isShowing()) {
+            finish();
+        }
         super.onBackPressed();
     }
 }

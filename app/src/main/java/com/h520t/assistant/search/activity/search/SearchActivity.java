@@ -239,4 +239,12 @@ public class SearchActivity extends AppCompatActivity {
             mDialog.cancel();
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if (mDialog!=null&&mDialog.isShowing()) {
+            finish();
+        }
+    }
 }
