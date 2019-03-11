@@ -55,13 +55,13 @@ public class GPAInformationActivity extends AppCompatActivity {
     private void calculateGPA(TextView gradePoint) {
         Double creditCount = Double.valueOf("0");
         Double count = Double.valueOf("0");
-        for (GPABean gpaBean  : Constant.sGPABeans) {
+        for (GPABean gpaBean : Constant.sGPABeans) {
             if (gpaBean.isChoice()) {
                 double credit = Double.parseDouble(gpaBean.getCredit());
                 double gpa = Double.parseDouble(gpaBean.getGpa());
-                creditCount = CalcUtils.add(credit,creditCount);
+                creditCount = CalcUtils.add(credit, creditCount);
                 Double multiply = CalcUtils.multiply(credit, gpa, 3, RoundingMode.HALF_UP);
-                count = CalcUtils.add(multiply,count);
+                count = CalcUtils.add(multiply, count);
             }
         }
         Double divide = CalcUtils.divide(count, creditCount, 2, RoundingMode.HALF_UP);

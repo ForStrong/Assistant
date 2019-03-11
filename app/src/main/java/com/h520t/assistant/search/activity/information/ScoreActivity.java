@@ -30,12 +30,6 @@ public class ScoreActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         ScoreAdapter adapter = new ScoreAdapter(Constant.sScoreBeans);
         recyclerView.setAdapter(adapter);
-
-
-
-
-
-
     }
 
     @Override

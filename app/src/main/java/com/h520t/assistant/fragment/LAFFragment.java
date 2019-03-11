@@ -255,7 +255,8 @@ public class LAFFragment extends Fragment {
         imageUri = data.getData();
         if (imageUri != null) {
             try {
-                mBitmap = BitmapFactory.decodeStream(Objects.requireNonNull(getActivity()).getContentResolver().openInputStream(imageUri));
+                mBitmap = BitmapFactory.decodeStream(Objects.requireNonNull(getActivity())
+                        .getContentResolver().openInputStream(imageUri));
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 mBitmap.compress(Bitmap.CompressFormat.JPEG,20,stream);
                 mBitmapBytes = stream.toByteArray();

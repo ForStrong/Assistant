@@ -100,6 +100,7 @@ public class TheLostInformationActivity extends AppCompatActivity {
         });
     }
 
+    @SuppressLint("HardwareIds")
     private void putData() {
         AVObject avObject;
         if (mObject==null) {
@@ -126,6 +127,7 @@ public class TheLostInformationActivity extends AppCompatActivity {
         });
         finish();
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_toolbar,menu);

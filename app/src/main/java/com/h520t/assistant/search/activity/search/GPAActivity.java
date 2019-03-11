@@ -212,7 +212,6 @@ public class GPAActivity extends AppCompatActivity {
             mDialog.setMessage("正在查询");
             mDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "取消", (dialogInterface, i) ->finish());
             mDialog.show();
-
             studentID = mStudentIDEt.getText().toString();
             password = mPasswordEt.getText().toString();
             verifyCode = mVerifyEt.getText().toString();

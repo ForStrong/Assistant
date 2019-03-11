@@ -1,0 +1,35 @@
+[33m8655c775eca251c0db980d825e93dcded1114e81[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m)[m Merge branch 'master' of https://github.com/huangaa/Assistant
+[33m8ebff67df204aae2836a23811220e5c47020ed13[m 修改search包下onBackPressed Bug
+[33m07625d2edff63238baf02142ff003d0b0a23735c[m Update README.md
+[33m7883ede24c550d2b5e29418d5965dfdf861076d9[m 绩点查询支持选择课程
+[33m55889a5e38342fbaf811fb60e93f395bf814baf8[m g改laf的item布局
+[33m1b7751f7c478dc18d98c3bcb01ca1fd62952ede6[m 添加我拾取物品
+[33m67e90614683558c3612c5dce22a52d01a051e5a2[m 解决fragment动态请求权限无法回调
+[33m2610a5708c8eaa56a884b52f0fcbf64b1d5de3c1[m Update README.md
+[33m937a72899977343695a09531400e151e8483e88f[m Update README.md
+[33m8f01961d4b07dc7abbc93c4b83736f2890cd506b[m Update README.md
+[33md466deff0da52ccafd058d26bf5f53fe8830ea65[m Update README.md
+[33mdd93d6996f6eaacf5340a572ffa8f9fd5f51bbaa[m Update README.md
+[33mc3d5a04e32f7408347626dff050cb2b5b7faa6e5[m Update README.md
+[33m97504179662e1c85f268f2fcd72d854d32449fea[m Update README.md
+[33mde86f31db3e406f8b7b146cc2546947ddad451f7[m Update README.md
+[33m74d41f0ea6dc6671c44319de2254a17de009d3c6[m Update README.md
+[33m041c95b2a4444a720472d1265b583fd398c900ca[m Update README.md
+[33mf2df0a2e796b06251cb6934e497077ea062ba223[m Update README.md
+[33m9579078271ab5491d6231f1ec589a54fd6895a5c[m Update README.md
+[33mc7d9d9095c7afe7f61c3c321b027bdeefa227ca8[m Update README.md
+[33m5524085b4c66aaf0f23e73cdd611e5f5007360ee[m Update README.md
+[33m6419cfcba1ffeab755c1e29848332fff288d7928[m Update README.md
+[33ma7d8bb3a7c44ae7fb4a37624c4797d60873bde85[m Merge branch 'master' of https://github.com/huangaa/Assistant
+[33m6a1756131861f7879917b99bc91adb420849da7c[m 添加展示用的图片
+[33m20a19f658f9587c41e023bb86d712491d65d2926[m Create README.md
+[33m1a62200f1791ab24a35f2ccc1e5fe4b3e7568549[m 内网URL ，动态请求_VIEWSATATE参数
+[33m30de60efb7d132deeaeb1d60837f1d611cccfa05[m no message
+[33m22af69c166349ee79f1506a9ed9b7f3e68bf10ec[m 判断内网,号码加正则表达式,完善失物招领部分
+[33m03bf0301f9e65892acf5dc1385386620302bfc17[m 记住密码，失物招领查看大图
+[33m820e62a2515cc449f9058717bce596a7efb0bfb5[m 添加校历
+[33m84d8644d42f29a89d6f1773529331344b42ed20b[m 完善失物招领
+[33m57928efa3c51b2052f16aca2c417b2c779316add[m 绩点查询部分完成
+[33m61fdb9052c460076cbe786ec05f7a7a96782e050[m 使用单例设计模式重构okhttp部分代码(httpUtils)
+[33m2072e4bf10ce0fb9c72f556f2d3cc13c8274d2c0[m 重构成绩查询代码
+[33m6b45e0140d9575390f4a548a1f952ca5bb190fc7[m 查询成绩部分完成

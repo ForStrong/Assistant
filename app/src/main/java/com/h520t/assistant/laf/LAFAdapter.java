@@ -49,6 +49,7 @@ public class LAFAdapter extends RecyclerView.Adapter<LAFAdapter.ViewHolder> {
         return new ViewHolder(view);
     }
 
+    @SuppressLint("HardwareIds")
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         AVObject avObject = mAVObjects.get(position);
